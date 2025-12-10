@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { StatusBadge } from '../components/UI/Badge';
 import { Button } from '../components/UI/Button';
@@ -14,33 +15,36 @@ import {
 } from 'lucide-react';
 import { mockDocuments, mockActivities } from '../data/mockData';
 import { formatDateTime } from '../utils/helpers';
+import { CompactCalendar } from '../components/UI/CompactCalendar';
 import './Dashboard.css';
 
 export const Dashboard: React.FC = () => {
+    const { t } = useTranslation();
+
     const stats = [
         {
-            title: 'Total Documents',
+            title: t('dashboard.stats.totalDocuments'),
             value: '248',
             change: '+12%',
             icon: <FileText size={24} />,
             color: 'primary'
         },
         {
-            title: 'Pending Review',
+            title: t('dashboard.stats.pendingReview'),
             value: '15',
             change: '+3',
             icon: <Clock size={24} />,
             color: 'warning'
         },
         {
-            title: 'Completed',
+            title: t('dashboard.stats.completed'),
             value: '189',
             change: '+8%',
             icon: <CheckCircle size={24} />,
             color: 'success'
         },
         {
-            title: 'SLA Breaches',
+            title: t('dashboard.stats.slaBreaches'),
             value: '4',
             change: '-2',
             icon: <AlertTriangle size={24} />,
@@ -55,15 +59,15 @@ export const Dashboard: React.FC = () => {
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Dashboard</h1>
-                    <p className="page-description">Welcome back! Here's an overview of your document management system.</p>
+                    <h1 className="page-title">{t('dashboard.title')}</h1>
+                    <p className="page-description">{t('dashboard.description')}</p>
                 </div>
                 <div className="page-actions">
                     <Button variant="outline" icon={<FolderOpen size={18} />}>
-                        View All Documents
+                        {t('dashboard.viewAllDocuments')}
                     </Button>
                     <Button icon={<FileText size={18} />}>
-                        New Document
+                        {t('dashboard.newDocument')}
                     </Button>
                 </div>
             </div>
@@ -82,7 +86,7 @@ export const Dashboard: React.FC = () => {
                                     <h3 className="stat-value">{stat.value}</h3>
                                     <div className="stat-change">
                                         <TrendingUp size={14} />
-                                        <span>{stat.change} from last month</span>
+                                        <span>{stat.change} {t('dashboard.stats.fromLastMonth')}</span>
                                     </div>
                                 </div>
                             </div>
@@ -91,13 +95,16 @@ export const Dashboard: React.FC = () => {
                 ))}
             </div>
 
+            {/* Compact Calendar */}
+            <CompactCalendar />
+
             <div className="dashboard-grid">
                 {/* Recent Documents */}
                 <Card className="dashboard-card">
                     <CardHeader>
                         <div className="card-header-content">
-                            <h3>Recent Documents</h3>
-                            <Button variant="ghost" size="sm">View All</Button>
+                            <h3>{t('dashboard.recentDocuments')}</h3>
+                            <Button variant="ghost" size="sm">{t('dashboard.viewAll')}</Button>
                         </div>
                     </CardHeader>
                     <CardBody>
@@ -127,24 +134,43 @@ export const Dashboard: React.FC = () => {
                 <Card className="dashboard-card">
                     <CardHeader>
                         <div className="card-header-content">
-                            <h3>Recent Activity</h3>
+                            <h3>{t('dashboard.recentActivity')}</h3>
                             <Activity size={20} />
                         </div>
                     </CardHeader>
                     <CardBody>
                         <div className="activity-feed">
-                            {recentActivities.map((activity) => (
-                                <div key={activity.id} className="activity-item">
-                                    <div className="activity-dot"></div>
-                                    <div className="activity-content">
-                                        <p className="activity-action">
-                                            <strong>{activity.user}</strong> {activity.action.toLowerCase()}
-                                        </p>
-                                        <p className="activity-details text-sm text-gray-500">{activity.details}</p>
-                                        <span className="activity-time text-xs text-gray-400">{formatDateTime(activity.timestamp)}</span>
-                                    </div>
-                                </div>
-                            ))}
+                            <div className="activity-feed">
+                                {recentActivities.map((activity) => {
+                                    let actionKey = activity.action;
+                                    // Simple mapping based on known mock data values
+                                    if (activity.action.includes('Received')) actionKey = 'activity.receive';
+                                    else if (activity.action.includes('OCR')) actionKey = 'activity.ocrProcessing';
+                                    else if (activity.action.includes('Assigned')) actionKey = 'activity.assign';
+                                    else if (activity.action.includes('Approved')) actionKey = 'activity.approve';
+                                    else if (activity.action.includes('Closed')) actionKey = 'activity.close';
+
+                                    let detailsKey = activity.details;
+                                    if (activity.details.includes('received')) detailsKey = 'activity.details.received';
+                                    else if (activity.details.includes('extraction')) detailsKey = 'activity.details.ocr';
+                                    else if (activity.details.includes('assigned')) detailsKey = 'activity.details.assigned';
+                                    else if (activity.details.includes('protocol')) detailsKey = 'activity.details.approved';
+                                    else if (activity.details.includes('archived')) detailsKey = 'activity.details.archived';
+
+                                    return (
+                                        <div key={activity.id} className="activity-item">
+                                            <div className="activity-dot"></div>
+                                            <div className="activity-content">
+                                                <p className="activity-action">
+                                                    <strong>{activity.user}</strong> {t(actionKey).toLowerCase()}
+                                                </p>
+                                                <p className="activity-details text-sm text-gray-500">{detailsKey === activity.details ? activity.details : t(detailsKey)}</p>
+                                                <span className="activity-time text-xs text-gray-400">{formatDateTime(activity.timestamp)}</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </CardBody>
                 </Card>
@@ -157,7 +183,7 @@ export const Dashboard: React.FC = () => {
                         <div className="quick-stat-item">
                             <Users size={20} className="text-primary-600" />
                             <div>
-                                <p className="text-sm text-gray-600">Active Users</p>
+                                <p className="text-sm text-gray-600">{t('dashboard.quickStats.activeUsers')}</p>
                                 <p className="text-xl font-bold">24</p>
                             </div>
                         </div>
@@ -168,7 +194,7 @@ export const Dashboard: React.FC = () => {
                         <div className="quick-stat-item">
                             <FolderOpen size={20} className="text-success-600" />
                             <div>
-                                <p className="text-sm text-gray-600">Departments</p>
+                                <p className="text-sm text-gray-600">{t('dashboard.quickStats.departments')}</p>
                                 <p className="text-xl font-bold">8</p>
                             </div>
                         </div>
@@ -179,7 +205,7 @@ export const Dashboard: React.FC = () => {
                         <div className="quick-stat-item">
                             <Clock size={20} className="text-warning-600" />
                             <div>
-                                <p className="text-sm text-gray-600">Avg. Processing Time</p>
+                                <p className="text-sm text-gray-600">{t('dashboard.quickStats.avgProcessingTime')}</p>
                                 <p className="text-xl font-bold">2.4 days</p>
                             </div>
                         </div>

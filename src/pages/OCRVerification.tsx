@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Input, Textarea } from '../components/UI/Input';
@@ -6,6 +7,7 @@ import { Badge } from '../components/UI/Badge';
 import { CheckCircle, Edit2, Save } from 'lucide-react';
 
 export const OCRVerification: React.FC = () => {
+    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const [ocrData, setOcrData] = useState({
         sender: 'Ministry of Finance',
@@ -27,11 +29,11 @@ export const OCRVerification: React.FC = () => {
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">OCR Verification</h1>
-                    <p className="page-description">Review and verify automatically extracted document information</p>
+                    <h1 className="page-title">{t('ocrVerification.title')}</h1>
+                    <p className="page-description">{t('ocrVerification.description')}</p>
                 </div>
                 <div className="page-actions">
-                    <Badge variant="success">Confidence: {confidence.overall}%</Badge>
+                    <Badge variant="success">{t('ocrVerification.confidence')}: {confidence.overall}%</Badge>
                 </div>
             </div>
 
@@ -39,14 +41,14 @@ export const OCRVerification: React.FC = () => {
                 <Card>
                     <CardHeader>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                            <h3 style={{ margin: 0 }}>Extracted Information</h3>
+                            <h3 style={{ margin: 0 }}>{t('ocrVerification.extractedInfo')}</h3>
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 icon={isEditing ? <Save size={16} /> : <Edit2 size={16} />}
                                 onClick={() => setIsEditing(!isEditing)}
                             >
-                                {isEditing ? 'Save' : 'Edit'}
+                                {isEditing ? t('ocrVerification.save') : t('ocrVerification.edit')}
                             </Button>
                         </div>
                     </CardHeader>
@@ -54,7 +56,7 @@ export const OCRVerification: React.FC = () => {
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-sm)' }}>
-                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>Sender</label>
+                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>{t('ocrVerification.sender')}</label>
                                     <Badge variant={confidence.sender >= 95 ? 'success' : 'warning'} size="sm">
                                         {confidence.sender}%
                                     </Badge>
@@ -73,7 +75,7 @@ export const OCRVerification: React.FC = () => {
 
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-sm)' }}>
-                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>Date of Letter</label>
+                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>{t('ocrVerification.dateOfLetter')}</label>
                                     <Badge variant={confidence.dateOfLetter >= 95 ? 'success' : 'warning'} size="sm">
                                         {confidence.dateOfLetter}%
                                     </Badge>
@@ -93,7 +95,7 @@ export const OCRVerification: React.FC = () => {
 
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-sm)' }}>
-                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>Title/Subject</label>
+                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>{t('ocrVerification.subject')}</label>
                                     <Badge variant={confidence.title >= 95 ? 'success' : 'warning'} size="sm">
                                         {confidence.title}%
                                     </Badge>
@@ -112,7 +114,7 @@ export const OCRVerification: React.FC = () => {
 
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'var(--spacing-sm)' }}>
-                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>Description/Summary</label>
+                                    <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>{t('ocrVerification.summary')}</label>
                                     <Badge variant={confidence.description >= 95 ? 'success' : 'warning'} size="sm">
                                         {confidence.description}%
                                     </Badge>
@@ -132,13 +134,13 @@ export const OCRVerification: React.FC = () => {
 
                             <div>
                                 <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)', display: 'block', marginBottom: 'var(--spacing-sm)' }}>
-                                    CC List
+                                    {t('ocrVerification.ccList')}
                                 </label>
                                 {isEditing ? (
                                     <Input
                                         value={ocrData.ccList}
                                         onChange={(e) => setOcrData({ ...ocrData, ccList: e.target.value })}
-                                        placeholder="Comma-separated list"
+                                        placeholder={t('ocrVerification.ccPlaceholder')}
                                     />
                                 ) : (
                                     <p style={{ padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-lg)' }}>
@@ -149,10 +151,10 @@ export const OCRVerification: React.FC = () => {
 
                             <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-lg)' }}>
                                 <Button icon={<CheckCircle size={18} />}>
-                                    Approve & Continue
+                                    {t('ocrVerification.approve')}
                                 </Button>
                                 <Button variant="outline">
-                                    Re-scan Document
+                                    {t('ocrVerification.rescan')}
                                 </Button>
                             </div>
                         </div>
@@ -161,7 +163,7 @@ export const OCRVerification: React.FC = () => {
 
                 <Card>
                     <CardHeader>
-                        <h3 style={{ margin: 0 }}>Document Preview</h3>
+                        <h3 style={{ margin: 0 }}>{t('ocrVerification.preview')}</h3>
                     </CardHeader>
                     <CardBody>
                         <div style={{
@@ -202,12 +204,12 @@ export const OCRVerification: React.FC = () => {
                         </div>
 
                         <div style={{ marginTop: 'var(--spacing-lg)' }}>
-                            <h4 style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--spacing-md)' }}>OCR Processing Details</h4>
+                            <h4 style={{ fontSize: 'var(--text-sm)', marginBottom: 'var(--spacing-md)' }}>{t('ocrVerification.processingDetails')}</h4>
                             <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• Language: Malay & English</p>
-                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• Processing Time: 3.2 seconds</p>
-                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• Pages: 1</p>
-                                <p>• Overall Confidence: {confidence.overall}%</p>
+                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• {t('ocrVerification.language')}</p>
+                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• {t('ocrVerification.processingTime')}: 3.2 seconds</p>
+                                <p style={{ marginBottom: 'var(--spacing-sm)' }}>• {t('ocrVerification.pages')}: 1</p>
+                                <p>• {t('ocrVerification.overallConfidence')}: {confidence.overall}%</p>
                             </div>
                         </div>
                     </CardBody>

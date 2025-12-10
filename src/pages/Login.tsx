@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../components/UI/Button';
 import { Input } from '../components/UI/Input';
 import { LogIn, Shield } from 'lucide-react';
@@ -7,6 +8,7 @@ import './Login.css';
 
 export const Login: React.FC = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -22,24 +24,24 @@ export const Login: React.FC = () => {
                 <div className="login-header">
                     <div className="login-logo">
                         <div className="login-logo-icon">📄</div>
-                        <h1>IDCM System</h1>
-                        <p>Intelligent Document Capture & Monitoring</p>
+                        <h1>{t('login.systemName')}</h1>
+                        <p>{t('login.systemSubtitle')}</p>
                     </div>
                     <div className="login-badge">
                         <Shield size={16} />
-                        <span>Government of Malaysia</span>
+                        <span>{t('login.govName')}</span>
                     </div>
                 </div>
 
                 <div className="login-card">
-                    <h2>Welcome Back</h2>
-                    <p className="login-subtitle">Sign in to access the document management system</p>
+                    <h2>{t('login.welcome')}</h2>
+                    <p className="login-subtitle">{t('login.subtitle')}</p>
 
                     <form onSubmit={handleLogin} className="login-form">
                         <Input
                             type="email"
-                            label="Email Address"
-                            placeholder="your.email@gov.my"
+                            label={t('login.emailLabel')}
+                            placeholder={t('login.emailPlaceholder')}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -47,8 +49,8 @@ export const Login: React.FC = () => {
 
                         <Input
                             type="password"
-                            label="Password"
-                            placeholder="Enter your password"
+                            label={t('login.passwordLabel')}
+                            placeholder={t('login.passwordPlaceholder')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -57,19 +59,19 @@ export const Login: React.FC = () => {
                         <div className="login-options">
                             <label className="checkbox-label">
                                 <input type="checkbox" />
-                                <span>Remember me</span>
+                                <span>{t('login.rememberMe')}</span>
                             </label>
-                            <a href="#" className="forgot-link">Forgot password?</a>
+                            <a href="#" className="forgot-link">{t('login.forgotPassword')}</a>
                         </div>
 
                         <Button type="submit" fullWidth icon={<LogIn size={18} />}>
-                            Sign In
+                            {t('login.signIn')}
                         </Button>
                     </form>
 
                     <div className="login-footer">
-                        <p>For official government use only</p>
-                        <p className="text-sm text-gray-500">© 2024 Government of Malaysia. All rights reserved.</p>
+                        <p>{t('login.footerOfficial')}</p>
+                        <p className="text-sm text-gray-500">{t('login.footerCopyright')}</p>
                     </div>
                 </div>
             </div>

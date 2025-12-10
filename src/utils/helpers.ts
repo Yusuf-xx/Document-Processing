@@ -1,8 +1,11 @@
 // Utility helper functions
 
+import i18n from '../i18n';
+
 export const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-MY', {
+    const locale = i18n.language === 'ms' ? 'ms-MY' : 'en-MY';
+    return date.toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -11,7 +14,8 @@ export const formatDate = (dateString: string): string => {
 
 export const formatDateTime = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-MY', {
+    const locale = i18n.language === 'ms' ? 'ms-MY' : 'en-MY';
+    return date.toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',

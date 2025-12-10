@@ -1,0 +1,594 @@
+{
+    "app": {
+        "title": "IDCM System",
+        "subtitle": "Document Management"
+    },
+    "nav": {
+        "main": "Main",
+        "dashboard": "Dashboard",
+        "calendar": "Calendar",
+        "documentProcessing": "Document Processing",
+        "documentReceipt": "Document Receipt",
+        "scanning": "Scanning",
+        "ocrVerification": "OCR Verification",
+        "classification": "Classification",
+        "monitoring": "Monitoring",
+        "documentTracking": "Document Tracking",
+        "workflow": "Workflow",
+        "archive": "Archive",
+        "administration": "Administration",
+        "userManagement": "User Management",
+        "reports": "Reports",
+        "settings": "Settings"
+    },
+    "header": {
+        "search": "Search documents...",
+        "quickActions": "Quick Actions",
+        "viewProfile": "View Profile",
+        "logout": "Logout",
+        "scanDocument": "Scan Document",
+        "uploadFile": "Upload File",
+        "notifications": "Notifications"
+    },
+    "common": {
+        "status": "Status",
+        "actions": "Actions",
+        "add": "Add",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "view": "View",
+        "submit": "Submit",
+        "approve": "Approve",
+        "reject": "Reject",
+        "date": "Date",
+        "user": "User",
+        "role": "Role",
+        "administrator": "Administrator",
+        "hours": "hours",
+        "days": "days"
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "description": "Welcome back! Here's an overview of your document management system.",
+        "viewAllDocuments": "View All Documents",
+        "newDocument": "New Document",
+        "stats": {
+            "totalDocuments": "Total Documents",
+            "pendingReview": "Pending Review",
+            "completed": "Completed",
+            "slaBreaches": "SLA Breaches",
+            "fromLastMonth": "from last month"
+        },
+        "recentDocuments": "Recent Documents",
+        "viewAll": "View All",
+        "recentActivity": "Recent Activity",
+        "quickStats": {
+            "activeUsers": "Active Users",
+            "departments": "Departments",
+            "avgProcessingTime": "Avg. Processing Time"
+        }
+    },
+    "status": {
+        "approved": "Approved",
+        "completed": "Completed",
+        "closed": "Closed",
+        "pending": "Pending",
+        "pendingReview": "Pending Review",
+        "waiting": "Waiting",
+        "rejected": "Rejected",
+        "overdue": "Overdue",
+        "inProgress": "In Progress",
+        "processing": "Processing",
+        "new": "New",
+        "assigned": "Assigned",
+        "received": "Received",
+        "pendingScan": "Pending Scan",
+        "scanned": "Scanned",
+        "pendingOcr": "Pending OCR",
+        "pendingVerification": "Pending Verification",
+        "pendingClassification": "Pending Classification",
+        "archived": "Archived",
+        "ocrVerified": "OCR Verified"
+    },
+    "classification": {
+        "topSecret": "Top Secret",
+        "secret": "Secret",
+        "confidential": "Confidential",
+        "restricted": "Restricted",
+        "internalUse": "Internal Use",
+        "open": "Open"
+    },
+    "departments": {
+        "finance": "Finance",
+        "hr": "HR",
+        "security": "Security",
+        "development": "Development",
+        "administration": "Administration",
+        "it": "IT",
+        "legal": "Legal",
+        "operations": "Operations"
+    },
+    "activity": {
+        "receive": "Document Received",
+        "ocrProcessing": "OCR Processing",
+        "assign": "Document Assigned",
+        "approve": "Document Approved",
+        "close": "Document Closed",
+        "details": {
+            "received": "Document received and registered in the system",
+            "ocr": "Automatic text extraction completed with 98% confidence",
+            "assigned": "Document assigned to HR department for review",
+            "approved": "Security protocol update approved and forwarded to implementation",
+            "archived": "Annual report reviewed and archived"
+        }
+    },
+    "login": {
+        "systemName": "IDCM System",
+        "systemSubtitle": "Intelligent Document Capture & Monitoring",
+        "govName": "Government of Malaysia",
+        "welcome": "Welcome Back",
+        "subtitle": "Sign in to access the document management system",
+        "emailLabel": "Email Address",
+        "emailPlaceholder": "your.email@gov.my",
+        "passwordLabel": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "rememberMe": "Remember me",
+        "forgotPassword": "Forgot password?",
+        "signIn": "Sign In",
+        "footerOfficial": "For official government use only",
+        "footerCopyright": "© 2024 Government of Malaysia. All rights reserved."
+    },
+    "documentReceipt": {
+        "title": "Document Receipt & Registration",
+        "description": "Register new incoming documents into the system",
+        "documentInfo": "Document Information",
+        "refNumber": "Reference Number",
+        "refNumberHelper": "Auto-generated reference number",
+        "dateReceived": "Date Received",
+        "sender": "Sender / Originating Agency",
+        "senderPlaceholder": "Enter sender name or agency",
+        "dateOfLetter": "Date of Letter/Document",
+        "notes": "Initial Notes",
+        "notesPlaceholder": "Any preliminary observations or notes...",
+        "uploadEnvelope": "Upload Envelope Image (Optional)",
+        "uploadText": "Click to upload or drag and drop",
+        "uploadHint": "PNG, JPG up to 10MB",
+        "register": "Register Document",
+        "qrCode": "QR Code",
+        "scanQr": "Scan this QR code for quick document tracking",
+        "printQr": "Print QR Code",
+        "nextSteps": "Next Steps",
+        "steps": {
+            "register": "Register document details",
+            "scan": "Proceed to scanning",
+            "ocr": "OCR verification",
+            "classification": "Classification & assignment"
+        }
+    },
+    "documentScan": {
+        "title": "Document Scanning",
+        "description": "Digitize physical documents with quality verification",
+        "viewQueue": "View Queue",
+        "scanHeader": "Scan Document",
+        "ready": "Ready to Scan",
+        "readyDesc": "Place document on scanner or upload digital file",
+        "start": "Start Scanning",
+        "upload": "Upload File",
+        "scanning": "Scanning in Progress...",
+        "scanningDesc": "Please wait while we digitize your document",
+        "complete": "Scan Complete!",
+        "completeDesc": "Document has been successfully scanned",
+        "proceedOcr": "Proceed to OCR",
+        "scanAnother": "Scan Another",
+        "qualityResults": "Quality Check Results",
+        "resolution": "Resolution",
+        "clarity": "Clarity",
+        "orientation": "Orientation",
+        "preview": "Preview",
+        "previewDoc": "Scanned Document Preview",
+        "noDoc": "No document scanned yet",
+        "rotate": "Rotate",
+        "crop": "Crop",
+        "enhance": "Enhance"
+    },
+    "ocrVerification": {
+        "title": "OCR Verification",
+        "description": "Review and verify automatically extracted document information",
+        "confidence": "Confidence",
+        "extractedInfo": "Extracted Information",
+        "save": "Save",
+        "edit": "Edit",
+        "sender": "Sender",
+        "dateOfLetter": "Date of Letter",
+        "subject": "Title/Subject",
+        "summary": "Description/Summary",
+        "ccList": "CC List",
+        "ccPlaceholder": "Comma-separated list",
+        "approve": "Approve & Continue",
+        "rescan": "Re-scan Document",
+        "preview": "Document Preview",
+        "processingDetails": "OCR Processing Details",
+        "language": "Language: Malay & English",
+        "processingTime": "Processing Time",
+        "pages": "Pages",
+        "overallConfidence": "Overall Confidence"
+    },
+    "documentClassification": {
+        "title": "Document Classification & Assignment",
+        "description": "Classify document and assign to appropriate personnel",
+        "details": "Classification Details",
+        "securityClass": "Security Classification",
+        "securityClassHelper": "Classification determines access control and SLA timelines",
+        "department": "Department",
+        "assignedTo": "Assigned To",
+        "assignedPlaceholder": "Select officer name",
+        "routing": "Routing Option",
+        "routeGm": "Route to General Manager first",
+        "routeDirect": "Direct distribution to departments",
+        "ccList": "CC List",
+        "ccPlaceholder": "Enter name or email",
+        "add": "Add",
+        "priority": "Priority",
+        "dueDate": "Due Date",
+        "dueDateHelper": "Based on security classification SLA",
+        "classifyAssign": "Classify & Assign",
+        "saveDraft": "Save as Draft",
+        "guide": "Classification Guide",
+        "sla": "SLA Timelines",
+        "topSecretDesc": "Highest classification. Unauthorized disclosure could cause exceptionally grave damage.",
+        "secretDesc": "Unauthorized disclosure could cause serious damage to national security.",
+        "confidentialDesc": "Unauthorized disclosure could cause damage to government interests.",
+        "restrictedDesc": "Limited distribution within authorized personnel only.",
+        "internalUseDesc": "For internal government use only.",
+        "openDesc": "Public information, no restrictions.",
+        "priorities": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High",
+            "critical": "Critical"
+        }
+    },
+    "documentTracking": {
+        "title": "Document Tracking",
+        "description": "Monitor and track all documents in the system",
+        "export": "Export Report",
+        "allDocuments": "All Documents",
+        "filterStatus": "Filter Status",
+        "filterDept": "Filter Department",
+        "allStatuses": "All Statuses",
+        "allDepartments": "All Departments",
+        "columns": {
+            "reference": "Reference",
+            "title": "Title",
+            "classification": "Classification",
+            "status": "Status",
+            "assignedTo": "Assigned To",
+            "dueDate": "Due Date",
+            "actions": "Actions"
+        },
+        "onTrack": "On Track",
+        "dueSoon": "Due Soon",
+        "overdue": "Overdue",
+        "daysOverdue": "{{count}} days overdue",
+        "daysLeft": "{{count}} days left"
+    },
+    "documentWorkflow": {
+        "title": "Document Workflow",
+        "description": "Track document progress and collaborate with team members",
+        "share": "Share",
+        "download": "Download",
+        "comments": "Comments & Discussion",
+        "addComment": "Add a comment or note...",
+        "postComment": "Post Comment",
+        "cancel": "Cancel",
+        "commentAdded": "Comment added successfully!",
+        "approvedTag": "Approved",
+        "queryTag": "Query",
+        "workflowProgress": "Workflow Progress",
+        "inProgress": "In Progress",
+        "quickActions": "Quick Actions",
+        "responded": "Responded",
+        "takeAction": "Take Action",
+        "forward": "Forward to Department",
+        "reassign": "Reassign",
+        "documentDetails": "Document Details",
+        "priority": "Priority",
+        "dateOfLetter": "Date of Letter",
+        "ccList": "CC List",
+        "detailsDesc": "Description",
+        "sender": "Sender",
+        "received": "Received",
+        "stages": {
+            "received": "Received",
+            "scanned": "Scanned",
+            "ocrVerified": "OCR Verified",
+            "classified": "Classified",
+            "underReview": "Under Review",
+            "approved": "Approved",
+            "archived": "Archived"
+        }
+    },
+    "archive": {
+        "title": "Document Archive",
+        "description": "Search and retrieve archived documents",
+        "export": "Export Archive List",
+        "totalArchived": "Total Archived",
+        "thisYear": "This Year",
+        "departments": "Departments",
+        "avgPerMonth": "Avg. per Month",
+        "searchLabel": "Search Documents",
+        "searchPlaceholder": "Search by title, reference number, or sender...",
+        "year": "Year",
+        "department": "Department",
+        "classification": "Classification",
+        "allYears": "All Years",
+        "allDepartments": "All Departments",
+        "allClassifications": "All Classifications",
+        "showingDocs": "Showing {{filtered}} of {{total}} archived documents",
+        "grid": "Grid",
+        "list": "List",
+        "sender": "Sender",
+        "archivedDate": "Archived Date",
+        "emptyTitle": "No archived documents found",
+        "emptyDesc": "Try adjusting your search criteria or filters",
+        "columns": {
+            "reference": "Reference",
+            "title": "Title",
+            "sender": "Sender",
+            "department": "Department",
+            "classification": "Classification",
+            "archivedDate": "Archived Date",
+            "actions": "Actions"
+        }
+    },
+    "userManagement": {
+        "title": "User Management",
+        "description": "Manage users, roles, and permissions",
+        "addUser": "Add New User",
+        "editUser": "Edit User",
+        "totalUsers": "Total Users",
+        "activeUsers": "Active Users",
+        "inactiveUsers": "Inactive Users",
+        "administrators": "Administrators",
+        "searchLabel": "Search Users",
+        "searchPlaceholder": "Search by name or email...",
+        "role": "Role",
+        "allRoles": "All Roles",
+        "status": "Status",
+        "allStatus": "All Status",
+        "showingUsers": "Showing {{filtered}} of {{total}} users",
+        "id": "ID",
+        "deleteConfirm": "Are you sure you want to delete {{name}}?",
+        "deleteSuccess": "User \"{{name}}\" deleted successfully!",
+        "addSuccess": "User \"{{name}}\" added successfully!",
+        "updateSuccess": "User \"{{name}}\" updated successfully!",
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "Enter full name",
+        "emailLabel": "Email Address",
+        "roles": {
+            "admin": "Administrator",
+            "officer": "Officer",
+            "clerk": "Data Entry Clerk"
+        },
+        "statusOptions": {
+            "active": "Active",
+            "inactive": "Inactive"
+        }
+    },
+    "reports": {
+        "title": "Reports & Analytics",
+        "description": "Generate reports and view analytics",
+        "exportPdf": "Export PDF",
+        "exportExcel": "Export Excel",
+        "totalDocuments": "Total Documents",
+        "completed": "Completed",
+        "pending": "Pending",
+        "inProgress": "In Progress",
+        "configuration": {
+            "title": "Report Configuration",
+            "reportType": "Report Type",
+            "dateRange": "Date Range",
+            "department": "Department",
+            "generate": "Generate Report"
+        },
+        "templates": {
+            "title": "Available Report Templates",
+            "overview": {
+                "name": "Document Overview Report",
+                "desc": "Comprehensive overview of all document activities"
+            },
+            "performance": {
+                "name": "Performance Analytics",
+                "desc": "Processing times and efficiency metrics"
+            },
+            "department": {
+                "name": "Department Analysis",
+                "desc": "Document distribution by department"
+            },
+            "sla": {
+                "name": "SLA Compliance Report",
+                "desc": "Service level agreement compliance tracking"
+            },
+            "user": {
+                "name": "User Activity Report",
+                "desc": "User engagement and activity statistics"
+            },
+            "classification": {
+                "name": "Classification Report",
+                "desc": "Document security classification breakdown"
+            }
+        },
+        "ranges": {
+            "today": "Today",
+            "thisWeek": "This Week",
+            "thisMonth": "This Month",
+            "lastMonth": "Last Month",
+            "thisQuarter": "This Quarter",
+            "thisYear": "This Year",
+            "custom": "Custom Range"
+        },
+        "quickStats": {
+            "title": "Quick Stats",
+            "avgTime": "Avg. Processing Time",
+            "totalUsers": "Total Users",
+            "activeUsers": "Active Users",
+            "completionRate": "Completion Rate"
+        },
+        "distribution": {
+            "title": "Department Distribution",
+            "docs": "docs"
+        },
+        "alerts": {
+            "generating": "Generating {{report}} for {{range}}...",
+            "exporting": "Exporting report as {{format}}..."
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "description": "Configure system settings and preferences",
+        "saveChanges": "Save Changes",
+        "savedSuccess": "Settings saved successfully!",
+        "tabs": {
+            "general": "General",
+            "security": "Security",
+            "notifications": "Notifications",
+            "appearance": "Appearance",
+            "system": "System"
+        },
+        "general": {
+            "title": "General Settings",
+            "orgName": "Organization Name",
+            "orgNamePlaceholder": "Enter organization name",
+            "orgNameHelper": "This name will appear in reports and documents",
+            "timezone": "Timezone",
+            "language": "Language",
+            "dateFormat": "Date Format"
+        },
+        "security": {
+            "title": "Security Settings",
+            "sessionTimeout": "Session Timeout",
+            "sessionTimeoutHelper": "Automatically log out users after period of inactivity",
+            "passwordExpiry": "Password Expiry",
+            "passwordExpiryHelper": "Require users to change passwords periodically",
+            "twoFactor": {
+                "title": "Two-Factor Authentication",
+                "desc": "Require additional verification for login"
+            },
+            "recommendation": {
+                "title": "Security Recommendation",
+                "desc": "We recommend enabling two-factor authentication and setting password expiry to 90 days or less for enhanced security."
+            },
+            "options": {
+                "minutes_15": "15 minutes",
+                "minutes_30": "30 minutes",
+                "hour_1": "1 hour",
+                "hours_2": "2 hours",
+                "days_30": "30 days",
+                "days_60": "60 days",
+                "days_90": "90 days",
+                "never": "Never"
+            }
+        },
+        "notifications": {
+            "title": "Notification Settings",
+            "email": {
+                "title": "Email Notifications",
+                "desc": "Receive email updates for important events"
+            },
+            "alerts": {
+                "title": "Document Alerts",
+                "desc": "Get notified about document status changes"
+            },
+            "updates": {
+                "title": "System Updates",
+                "desc": "Receive notifications about system maintenance"
+            }
+        },
+        "appearance": {
+            "title": "Appearance Settings",
+            "theme": "Theme",
+            "light": {
+                "title": "Light Mode",
+                "desc": "Clean and bright interface"
+            },
+            "dark": {
+                "title": "Dark Mode",
+                "desc": "Easy on the eyes"
+            },
+            "compact": {
+                "title": "Compact Mode",
+                "desc": "Reduce spacing for denser information display"
+            }
+        },
+        "system": {
+            "title": "System Information",
+            "version": "System Version",
+            "dbStatus": "Database Status",
+            "connected": "Connected",
+            "lastBackup": "Last Backup",
+            "storage": "Storage Used",
+            "diagnostics": "Run System Diagnostics"
+        }
+    },
+    "calendar": {
+        "title": "Calendar & Reminders",
+        "description": "Manage document deadlines and automated notifications",
+        "today": "Today",
+        "settings": "Settings",
+        "months": [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ],
+        "weekdays": [
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
+        ],
+        "due": "Due",
+        "more": "more",
+        "documentsDueOn": "Documents Due on {{date}}",
+        "assignedTo": "Assigned to",
+        "details": "Details",
+        "upcomingReminders": {
+            "title": "Upcoming Reminders",
+            "description": "Automated reminders for documents due within 7 days.",
+            "noReminders": "No upcoming reminders",
+            "sendNow": "Send Now",
+            "scheduled": "Scheduled",
+            "sent": "Sent",
+            "alertSuccess": "Reminder sent for document! Notification dispatched to assignee."
+        },
+        "automationRules": {
+            "title": "Automation Rules",
+            "configure": "Configure Rules",
+            "daysBeforeDue_3": "3 Days Before Due",
+            "daysBeforeDue_1": "1 Day Before Due",
+            "emailToAssignee": "Email to Assignee",
+            "smsAndEmail": "SMS & Email to Assignee + Manager",
+            "overdue": "Overdue",
+            "systemAlert": "System Alert to Administrator"
+        },
+        "legend": {
+            "title": "Legend",
+            "deadline": "Deadline",
+            "selected": "Selected",
+            "completed": "Completed"
+        }
+    }
+}

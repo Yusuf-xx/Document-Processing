@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Textarea } from '../components/UI/Input';
@@ -19,6 +20,7 @@ import { mockDocuments } from '../data/mockData';
 import { formatDateTime } from '../utils/helpers';
 
 export const DocumentWorkflow: React.FC = () => {
+    const { t } = useTranslation();
     const [newComment, setNewComment] = useState('');
 
     // Using first document as example
@@ -63,24 +65,29 @@ export const DocumentWorkflow: React.FC = () => {
 
     const handleAddComment = () => {
         if (newComment.trim()) {
-            alert('Comment added successfully!');
+            alert(t('documentWorkflow.commentAdded'));
             setNewComment('');
         }
+    };
+
+    const getStageName = (name: string) => {
+        const key = name.replace(/\s+/g, '').replace(/^\w/, c => c.toLowerCase());
+        return t(`documentWorkflow.stages.${key}`);
     };
 
     return (
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Document Workflow</h1>
-                    <p className="page-description">Track document progress and collaborate with team members</p>
+                    <h1 className="page-title">{t('documentWorkflow.title')}</h1>
+                    <p className="page-description">{t('documentWorkflow.description')}</p>
                 </div>
                 <div className="page-actions">
                     <Button variant="outline" icon={<Share2 size={18} />}>
-                        Share
+                        {t('documentWorkflow.share')}
                     </Button>
                     <Button variant="outline" icon={<Download size={18} />}>
-                        Download
+                        {t('documentWorkflow.download')}
                     </Button>
                 </div>
             </div>
@@ -117,13 +124,13 @@ export const DocumentWorkflow: React.FC = () => {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                                     <User size={16} style={{ color: 'var(--color-gray-500)' }} />
                                     <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                        Sender: <strong>{document.sender}</strong>
+                                        {t('documentWorkflow.sender')}: <strong>{document.sender}</strong>
                                     </span>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                                     <Calendar size={16} style={{ color: 'var(--color-gray-500)' }} />
                                     <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                        Received: <strong>{document.dateReceived}</strong>
+                                        {t('documentWorkflow.received')}: <strong>{document.dateReceived}</strong>
                                     </span>
                                 </div>
                             </div>
@@ -131,23 +138,23 @@ export const DocumentWorkflow: React.FC = () => {
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>Status</span>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('common.status')}</span>
                                 <StatusBadge status={document.status} />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>Classification</span>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentTracking.columns.classification')}</span>
                                 <SecurityBadge classification={document.classification} />
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>Department</span>
-                                <strong style={{ fontSize: 'var(--text-sm)' }}>{document.department}</strong>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentClassification.department')}</span>
+                                <strong style={{ fontSize: 'var(--text-sm)' }}>{t(`departments.${document.department.toLowerCase()}`)}</strong>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>Assigned To</span>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentClassification.assignedTo')}</span>
                                 <strong style={{ fontSize: 'var(--text-sm)' }}>{document.assignedTo}</strong>
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>Due Date</span>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentClassification.dueDate')}</span>
                                 <strong style={{ fontSize: 'var(--text-sm)', color: 'var(--color-danger-600)' }}>{document.dueDate}</strong>
                             </div>
                         </div>
@@ -160,7 +167,7 @@ export const DocumentWorkflow: React.FC = () => {
                 <div>
                     <Card>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Workflow Progress</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentWorkflow.workflowProgress')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ position: 'relative' }}>
@@ -222,7 +229,7 @@ export const DocumentWorkflow: React.FC = () => {
                                                     fontWeight: stage.status === 'current' ? 700 : 600,
                                                     color: stage.status === 'pending' ? 'var(--color-gray-500)' : 'var(--color-gray-900)'
                                                 }}>
-                                                    {stage.name}
+                                                    {getStageName(stage.name)}
                                                 </h4>
                                                 {stage.status === 'current' && (
                                                     <span style={{
@@ -233,7 +240,7 @@ export const DocumentWorkflow: React.FC = () => {
                                                         padding: '2px 8px',
                                                         borderRadius: 'var(--radius-full)'
                                                     }}>
-                                                        In Progress
+                                                        {t('documentWorkflow.inProgress')}
                                                     </span>
                                                 )}
                                             </div>
@@ -257,7 +264,7 @@ export const DocumentWorkflow: React.FC = () => {
                     <Card style={{ marginTop: 'var(--spacing-xl)' }}>
                         <CardHeader>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                <h3 style={{ margin: 0 }}>Comments & Discussion</h3>
+                                <h3 style={{ margin: 0 }}>{t('documentWorkflow.comments')}</h3>
                                 <MessageSquare size={20} style={{ color: 'var(--color-gray-500)' }} />
                             </div>
                         </CardHeader>
@@ -322,7 +329,7 @@ export const DocumentWorkflow: React.FC = () => {
                                                         borderRadius: 'var(--radius-md)'
                                                     }}>
                                                         <CheckCircle size={12} />
-                                                        Approved
+                                                        {t('documentWorkflow.approvedTag')}
                                                     </div>
                                                 )}
                                                 {comment.type === 'query' && (
@@ -338,7 +345,7 @@ export const DocumentWorkflow: React.FC = () => {
                                                         borderRadius: 'var(--radius-md)'
                                                     }}>
                                                         <AlertCircle size={12} />
-                                                        Query
+                                                        {t('documentWorkflow.queryTag')}
                                                     </div>
                                                 )}
                                             </div>
@@ -350,17 +357,17 @@ export const DocumentWorkflow: React.FC = () => {
                             {/* Add Comment */}
                             <div>
                                 <Textarea
-                                    placeholder="Add a comment or note..."
+                                    placeholder={t('documentWorkflow.addComment')}
                                     value={newComment}
                                     onChange={(e) => setNewComment(e.target.value)}
                                     rows={3}
                                 />
                                 <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-md)' }}>
                                     <Button onClick={handleAddComment} icon={<Send size={18} />}>
-                                        Post Comment
+                                        {t('documentWorkflow.postComment')}
                                     </Button>
                                     <Button variant="outline" onClick={() => setNewComment('')}>
-                                        Cancel
+                                        {t('documentWorkflow.cancel')}
                                     </Button>
                                 </div>
                             </div>
@@ -372,21 +379,21 @@ export const DocumentWorkflow: React.FC = () => {
                 <div>
                     <Card>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Quick Actions</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentWorkflow.quickActions')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 <Button fullWidth icon={<CheckCircle size={18} />}>
-                                    Approve Document
+                                    {t('documentWorkflow.responded')}
                                 </Button>
                                 <Button variant="outline" fullWidth>
-                                    Request Changes
+                                    {t('documentWorkflow.takeAction')}
                                 </Button>
                                 <Button variant="outline" fullWidth>
-                                    Forward to Department
+                                    {t('documentWorkflow.forward')}
                                 </Button>
                                 <Button variant="outline" fullWidth>
-                                    Reassign
+                                    {t('documentWorkflow.reassign')}
                                 </Button>
                             </div>
                         </CardBody>
@@ -394,25 +401,25 @@ export const DocumentWorkflow: React.FC = () => {
 
                     <Card style={{ marginTop: 'var(--spacing-lg)' }}>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Document Details</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentWorkflow.documentDetails')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 <div>
                                     <p style={{ color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                        Priority
+                                        {t('documentWorkflow.priority')}
                                     </p>
-                                    <strong style={{ color: 'var(--color-danger-600)' }}>{document.priority}</strong>
+                                    <strong style={{ color: 'var(--color-danger-600)' }}>{t(`documentClassification.priorities.${document.priority.toLowerCase()}`)}</strong>
                                 </div>
                                 <div>
                                     <p style={{ color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                        Date of Letter
+                                        {t('documentWorkflow.dateOfLetter')}
                                     </p>
                                     <strong>{document.dateOfLetter}</strong>
                                 </div>
                                 <div>
                                     <p style={{ color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                        CC List
+                                        {t('documentWorkflow.ccList')}
                                     </p>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
                                         {document.ccList.map((cc, index) => (
@@ -426,7 +433,7 @@ export const DocumentWorkflow: React.FC = () => {
 
                     <Card style={{ marginTop: 'var(--spacing-lg)' }}>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Description</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentWorkflow.detailsDesc')}</h3>
                         </CardHeader>
                         <CardBody>
                             <p style={{

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Input, Select } from '../components/UI/Input';
@@ -19,6 +20,7 @@ import { mockDocuments } from '../data/mockData';
 import { formatDate } from '../utils/helpers';
 
 export const Archive: React.FC = () => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [filterYear, setFilterYear] = useState('all');
@@ -51,16 +53,20 @@ export const Archive: React.FC = () => {
         }, {} as Record<string, number>)
     };
 
+    const getDeptLabel = (d: string) => {
+        return t(`departments.${d.toLowerCase()}`);
+    };
+
     return (
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Document Archive</h1>
-                    <p className="page-description">Search and retrieve archived documents</p>
+                    <h1 className="page-title">{t('archive.title')}</h1>
+                    <p className="page-description">{t('archive.description')}</p>
                 </div>
                 <div className="page-actions">
                     <Button variant="outline" icon={<Download size={18} />}>
-                        Export Archive List
+                        {t('archive.export')}
                     </Button>
                 </div>
             </div>
@@ -84,7 +90,7 @@ export const Archive: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Total Archived
+                                    {t('archive.totalArchived')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.total}
@@ -111,7 +117,7 @@ export const Archive: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    This Year
+                                    {t('archive.thisYear')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.thisYear}
@@ -138,7 +144,7 @@ export const Archive: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Departments
+                                    {t('archive.departments')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {Object.keys(stats.byDepartment).length}
@@ -165,7 +171,7 @@ export const Archive: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Avg. per Month
+                                    {t('archive.avgPerMonth')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {Math.round(stats.thisYear / 12)}
@@ -181,19 +187,19 @@ export const Archive: React.FC = () => {
                 <CardBody>
                     <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 'var(--spacing-md)', alignItems: 'end' }}>
                         <Input
-                            label="Search Documents"
-                            placeholder="Search by title, reference number, or sender..."
+                            label={t('archive.searchLabel')}
+                            placeholder={t('archive.searchPlaceholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             icon={<Search size={18} />}
                         />
 
                         <Select
-                            label="Year"
+                            label={t('archive.year')}
                             value={filterYear}
                             onChange={(e) => setFilterYear(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Years' },
+                                { value: 'all', label: t('archive.allYears') },
                                 { value: '2025', label: '2025' },
                                 { value: '2024', label: '2024' },
                                 { value: '2023', label: '2023' },
@@ -203,38 +209,43 @@ export const Archive: React.FC = () => {
                         />
 
                         <Select
-                            label="Department"
+                            label={t('archive.department')}
                             value={filterDept}
                             onChange={(e) => setFilterDept(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Departments' },
-                                { value: 'Finance', label: 'Finance' },
-                                { value: 'HR', label: 'HR' },
-                                { value: 'Security', label: 'Security' },
-                                { value: 'Development', label: 'Development' },
-                                { value: 'Administration', label: 'Administration' }
+                                { value: 'all', label: t('archive.allDepartments') },
+                                { value: 'Finance', label: getDeptLabel('Finance') },
+                                { value: 'HR', label: getDeptLabel('HR') },
+                                { value: 'Security', label: getDeptLabel('Security') },
+                                { value: 'Development', label: getDeptLabel('Development') },
+                                { value: 'Administration', label: getDeptLabel('Administration') }
                             ]}
                         />
 
                         <Select
-                            label="Classification"
+                            label={t('archive.classification')}
                             value={filterClassification}
                             onChange={(e) => setFilterClassification(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Classifications' },
-                                { value: 'Open', label: 'Open' },
-                                { value: 'Internal Use', label: 'Internal Use' },
-                                { value: 'Restricted', label: 'Restricted' },
-                                { value: 'Confidential', label: 'Confidential' },
-                                { value: 'Secret', label: 'Secret' },
-                                { value: 'Top Secret', label: 'Top Secret' }
+                                { value: 'all', label: t('archive.allClassifications') },
+                                { value: 'Open', label: t('classification.open') },
+                                { value: 'Internal Use', label: t('classification.internalUse') },
+                                { value: 'Restricted', label: t('classification.restricted') },
+                                { value: 'Confidential', label: t('classification.confidential') },
+                                { value: 'Secret', label: t('classification.secret') },
+                                { value: 'Top Secret', label: t('classification.topSecret') }
                             ]}
                         />
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'var(--spacing-lg)' }}>
                         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0 }}>
-                            Showing <strong>{filteredDocs.length}</strong> of <strong>{archivedDocs.length}</strong> archived documents
+                            <span dangerouslySetInnerHTML={{
+                                __html: t('archive.showingDocs', {
+                                    filtered: `<strong>${filteredDocs.length}</strong>`,
+                                    total: `<strong>${archivedDocs.length}</strong>`
+                                })
+                            }} />
                         </p>
 
                         <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
@@ -244,7 +255,7 @@ export const Archive: React.FC = () => {
                                 icon={<Grid size={16} />}
                                 onClick={() => setViewMode('grid')}
                             >
-                                Grid
+                                {t('archive.grid')}
                             </Button>
                             <Button
                                 variant={viewMode === 'list' ? 'primary' : 'outline'}
@@ -252,7 +263,7 @@ export const Archive: React.FC = () => {
                                 icon={<List size={16} />}
                                 onClick={() => setViewMode('list')}
                             >
-                                List
+                                {t('archive.list')}
                             </Button>
                         </div>
                     </div>
@@ -309,15 +320,15 @@ export const Archive: React.FC = () => {
 
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-sm)' }}>
-                                            <span style={{ color: 'var(--color-gray-600)' }}>Sender:</span>
+                                            <span style={{ color: 'var(--color-gray-600)' }}>{t('archive.sender')}:</span>
                                             <strong style={{ textAlign: 'right' }}>{doc.sender}</strong>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-sm)' }}>
-                                            <span style={{ color: 'var(--color-gray-600)' }}>Department:</span>
-                                            <strong>{doc.department}</strong>
+                                            <span style={{ color: 'var(--color-gray-600)' }}>{t('archive.department')}:</span>
+                                            <strong>{t(`departments.${doc.department.toLowerCase()}`)}</strong>
                                         </div>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--text-sm)' }}>
-                                            <span style={{ color: 'var(--color-gray-600)' }}>Archived:</span>
+                                            <span style={{ color: 'var(--color-gray-600)' }}>{t('archive.archivedDate')}:</span>
                                             <strong>{formatDate(doc.dateReceived)}</strong>
                                         </div>
                                     </div>
@@ -329,10 +340,10 @@ export const Archive: React.FC = () => {
 
                                     <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
                                         <Button variant="outline" size="sm" fullWidth icon={<Eye size={16} />}>
-                                            View
+                                            {t('common.view')}
                                         </Button>
                                         <Button variant="outline" size="sm" fullWidth icon={<Download size={16} />}>
-                                            Download
+                                            {t('documentWorkflow.download')}
                                         </Button>
                                     </div>
                                 </CardBody>
@@ -348,25 +359,25 @@ export const Archive: React.FC = () => {
                                 <thead>
                                     <tr style={{ borderBottom: '1px solid var(--color-gray-200)', background: 'var(--color-gray-50)' }}>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Reference
+                                            {t('archive.columns.reference')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Title
+                                            {t('archive.columns.title')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Sender
+                                            {t('archive.columns.sender')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Department
+                                            {t('archive.columns.department')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Classification
+                                            {t('archive.columns.classification')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Archived Date
+                                            {t('archive.columns.archivedDate')}
                                         </th>
                                         <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                            Actions
+                                            {t('archive.columns.actions')}
                                         </th>
                                     </tr>
                                 </thead>
@@ -386,7 +397,7 @@ export const Archive: React.FC = () => {
                                                 {doc.sender}
                                             </td>
                                             <td style={{ padding: 'var(--spacing-md)', fontSize: 'var(--text-sm)' }}>
-                                                {doc.department}
+                                                {t(`departments.${doc.department.toLowerCase()}`)}
                                             </td>
                                             <td style={{ padding: 'var(--spacing-md)' }}>
                                                 <SecurityBadge classification={doc.classification} />
@@ -397,10 +408,10 @@ export const Archive: React.FC = () => {
                                             <td style={{ padding: 'var(--spacing-md)' }}>
                                                 <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
                                                     <Button variant="ghost" size="sm" icon={<Eye size={16} />}>
-                                                        View
+                                                        {t('common.view')}
                                                     </Button>
                                                     <Button variant="ghost" size="sm" icon={<Download size={16} />}>
-                                                        Download
+                                                        {t('documentWorkflow.download')}
                                                     </Button>
                                                 </div>
                                             </td>
@@ -419,10 +430,10 @@ export const Archive: React.FC = () => {
                         <div style={{ textAlign: 'center', padding: 'var(--spacing-3xl)' }}>
                             <ArchiveIcon size={48} style={{ color: 'var(--color-gray-400)', margin: '0 auto var(--spacing-lg)' }} />
                             <h3 style={{ color: 'var(--color-gray-700)', marginBottom: 'var(--spacing-sm)' }}>
-                                No archived documents found
+                                {t('archive.emptyTitle')}
                             </h3>
                             <p style={{ color: 'var(--color-gray-500)', fontSize: 'var(--text-sm)' }}>
-                                Try adjusting your search criteria or filters
+                                {t('archive.emptyDesc')}
                             </p>
                         </div>
                     </CardBody>

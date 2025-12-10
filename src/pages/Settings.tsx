@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Input, Select } from '../components/UI/Input';
@@ -17,6 +18,7 @@ import {
 } from 'lucide-react';
 
 export const Settings: React.FC = () => {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState('general');
     const [settings, setSettings] = useState({
         // General
@@ -41,7 +43,7 @@ export const Settings: React.FC = () => {
     });
 
     const handleSave = () => {
-        alert('Settings saved successfully!');
+        alert(t('settings.savedSuccess'));
     };
 
     const handleChange = (key: string, value: any) => {
@@ -49,23 +51,23 @@ export const Settings: React.FC = () => {
     };
 
     const tabs = [
-        { id: 'general', label: 'General', icon: <Globe size={18} /> },
-        { id: 'security', label: 'Security', icon: <Shield size={18} /> },
-        { id: 'notifications', label: 'Notifications', icon: <Bell size={18} /> },
-        { id: 'appearance', label: 'Appearance', icon: <Palette size={18} /> },
-        { id: 'system', label: 'System', icon: <Database size={18} /> }
+        { id: 'general', label: t('settings.tabs.general'), icon: <Globe size={18} /> },
+        { id: 'security', label: t('settings.tabs.security'), icon: <Shield size={18} /> },
+        { id: 'notifications', label: t('settings.tabs.notifications'), icon: <Bell size={18} /> },
+        { id: 'appearance', label: t('settings.tabs.appearance'), icon: <Palette size={18} /> },
+        { id: 'system', label: t('settings.tabs.system'), icon: <Database size={18} /> }
     ];
 
     return (
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Settings</h1>
-                    <p className="page-description">Configure system settings and preferences</p>
+                    <h1 className="page-title">{t('settings.title')}</h1>
+                    <p className="page-description">{t('settings.description')}</p>
                 </div>
                 <div className="page-actions">
                     <Button icon={<Save size={18} />} onClick={handleSave}>
-                        Save Changes
+                        {t('settings.saveChanges')}
                     </Button>
                 </div>
             </div>
@@ -119,25 +121,25 @@ export const Settings: React.FC = () => {
                     {activeTab === 'general' && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>General Settings</h3>
+                                <h3 style={{ margin: 0 }}>{t('settings.general.title')}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
                                     <div>
                                         <Input
-                                            label="Organization Name"
+                                            label={t('settings.general.orgName')}
                                             value={settings.organizationName}
                                             onChange={(e) => handleChange('organizationName', e.target.value)}
-                                            placeholder="Enter organization name"
+                                            placeholder={t('settings.general.orgNamePlaceholder')}
                                         />
                                         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', marginTop: 'var(--spacing-xs)' }}>
-                                            This name will appear in reports and documents
+                                            {t('settings.general.orgNameHelper')}
                                         </p>
                                     </div>
 
                                     <div>
                                         <Select
-                                            label="Timezone"
+                                            label={t('settings.general.timezone')}
                                             value={settings.timezone}
                                             onChange={(e) => handleChange('timezone', e.target.value)}
                                             options={[
@@ -151,7 +153,7 @@ export const Settings: React.FC = () => {
 
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)' }}>
                                         <Select
-                                            label="Language"
+                                            label={t('settings.general.language')}
                                             value={settings.language}
                                             onChange={(e) => handleChange('language', e.target.value)}
                                             options={[
@@ -162,7 +164,7 @@ export const Settings: React.FC = () => {
                                         />
 
                                         <Select
-                                            label="Date Format"
+                                            label={t('settings.general.dateFormat')}
                                             value={settings.dateFormat}
                                             onChange={(e) => handleChange('dateFormat', e.target.value)}
                                             options={[
@@ -181,41 +183,41 @@ export const Settings: React.FC = () => {
                     {activeTab === 'security' && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>Security Settings</h3>
+                                <h3 style={{ margin: 0 }}>{t('settings.security.title')}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
                                     <div>
                                         <Select
-                                            label="Session Timeout"
+                                            label={t('settings.security.sessionTimeout')}
                                             value={settings.sessionTimeout}
                                             onChange={(e) => handleChange('sessionTimeout', e.target.value)}
                                             options={[
-                                                { value: '15', label: '15 minutes' },
-                                                { value: '30', label: '30 minutes' },
-                                                { value: '60', label: '1 hour' },
-                                                { value: '120', label: '2 hours' }
+                                                { value: '15', label: t('settings.security.options.minutes_15') },
+                                                { value: '30', label: t('settings.security.options.minutes_30') },
+                                                { value: '60', label: t('settings.security.options.hour_1') },
+                                                { value: '120', label: t('settings.security.options.hours_2') }
                                             ]}
                                         />
                                         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', marginTop: 'var(--spacing-xs)' }}>
-                                            Automatically log out users after period of inactivity
+                                            {t('settings.security.sessionTimeoutHelper')}
                                         </p>
                                     </div>
 
                                     <div>
                                         <Select
-                                            label="Password Expiry"
+                                            label={t('settings.security.passwordExpiry')}
                                             value={settings.passwordExpiry}
                                             onChange={(e) => handleChange('passwordExpiry', e.target.value)}
                                             options={[
-                                                { value: '30', label: '30 days' },
-                                                { value: '60', label: '60 days' },
-                                                { value: '90', label: '90 days' },
-                                                { value: 'never', label: 'Never' }
+                                                { value: '30', label: t('settings.security.options.days_30') },
+                                                { value: '60', label: t('settings.security.options.days_60') },
+                                                { value: '90', label: t('settings.security.options.days_90') },
+                                                { value: 'never', label: t('settings.security.options.never') }
                                             ]}
                                         />
                                         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', marginTop: 'var(--spacing-xs)' }}>
-                                            Require users to change passwords periodically
+                                            {t('settings.security.passwordExpiryHelper')}
                                         </p>
                                     </div>
 
@@ -223,10 +225,10 @@ export const Settings: React.FC = () => {
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
                                             <div>
                                                 <div style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
-                                                    Two-Factor Authentication
+                                                    {t('settings.security.twoFactor.title')}
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Require additional verification for login
+                                                    {t('settings.security.twoFactor.desc')}
                                                 </div>
                                             </div>
                                             <label style={{ position: 'relative', display: 'inline-block', width: '48px', height: '24px' }}>
@@ -268,10 +270,10 @@ export const Settings: React.FC = () => {
                                             <Lock size={20} style={{ color: 'var(--color-warning-700)', flexShrink: 0 }} />
                                             <div>
                                                 <div style={{ fontWeight: 600, color: 'var(--color-warning-900)', marginBottom: 'var(--spacing-xs)' }}>
-                                                    Security Recommendation
+                                                    {t('settings.security.recommendation.title')}
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-warning-800)' }}>
-                                                    We recommend enabling two-factor authentication and setting password expiry to 90 days or less for enhanced security.
+                                                    {t('settings.security.recommendation.desc')}
                                                 </div>
                                             </div>
                                         </div>
@@ -285,7 +287,7 @@ export const Settings: React.FC = () => {
                     {activeTab === 'notifications' && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>Notification Settings</h3>
+                                <h3 style={{ margin: 0 }}>{t('settings.notifications.title')}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
@@ -294,10 +296,10 @@ export const Settings: React.FC = () => {
                                             <Mail size={20} style={{ color: 'var(--color-primary-600)' }} />
                                             <div>
                                                 <div style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
-                                                    Email Notifications
+                                                    {t('settings.notifications.email.title')}
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Receive email updates for important events
+                                                    {t('settings.notifications.email.desc')}
                                                 </div>
                                             </div>
                                         </div>
@@ -339,10 +341,10 @@ export const Settings: React.FC = () => {
                                             <Bell size={20} style={{ color: 'var(--color-warning-600)' }} />
                                             <div>
                                                 <div style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
-                                                    Document Alerts
+                                                    {t('settings.notifications.alerts.title')}
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Get notified about document status changes
+                                                    {t('settings.notifications.alerts.desc')}
                                                 </div>
                                             </div>
                                         </div>
@@ -384,10 +386,10 @@ export const Settings: React.FC = () => {
                                             <Database size={20} style={{ color: 'var(--color-info-600)' }} />
                                             <div>
                                                 <div style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
-                                                    System Updates
+                                                    {t('settings.notifications.updates.title')}
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Receive notifications about system maintenance
+                                                    {t('settings.notifications.updates.desc')}
                                                 </div>
                                             </div>
                                         </div>
@@ -432,13 +434,13 @@ export const Settings: React.FC = () => {
                     {activeTab === 'appearance' && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>Appearance Settings</h3>
+                                <h3 style={{ margin: 0 }}>{t('settings.appearance.title')}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
                                     <div>
                                         <label style={{ display: 'block', fontSize: 'var(--text-sm)', fontWeight: 600, marginBottom: 'var(--spacing-md)', color: 'var(--color-gray-700)' }}>
-                                            Theme
+                                            {t('settings.appearance.theme')}
                                         </label>
                                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-md)' }}>
                                             <div
@@ -454,10 +456,10 @@ export const Settings: React.FC = () => {
                                             >
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
                                                     <Sun size={24} style={{ color: 'var(--color-warning-600)' }} />
-                                                    <div style={{ fontWeight: 600 }}>Light Mode</div>
+                                                    <div style={{ fontWeight: 600 }}>{t('settings.appearance.light.title')}</div>
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Clean and bright interface
+                                                    {t('settings.appearance.light.desc')}
                                                 </div>
                                             </div>
 
@@ -474,10 +476,10 @@ export const Settings: React.FC = () => {
                                             >
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-md)' }}>
                                                     <Moon size={24} style={{ color: 'var(--color-info-600)' }} />
-                                                    <div style={{ fontWeight: 600 }}>Dark Mode</div>
+                                                    <div style={{ fontWeight: 600 }}>{t('settings.appearance.dark.title')}</div>
                                                 </div>
                                                 <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                    Easy on the eyes
+                                                    {t('settings.appearance.dark.desc')}
                                                 </div>
                                             </div>
                                         </div>
@@ -486,10 +488,10 @@ export const Settings: React.FC = () => {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
                                         <div>
                                             <div style={{ fontWeight: 600, marginBottom: 'var(--spacing-xs)' }}>
-                                                Compact Mode
+                                                {t('settings.appearance.compact.title')}
                                             </div>
                                             <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>
-                                                Reduce spacing for denser information display
+                                                {t('settings.appearance.compact.desc')}
                                             </div>
                                         </div>
                                         <label style={{ position: 'relative', display: 'inline-block', width: '48px', height: '24px' }}>
@@ -533,30 +535,30 @@ export const Settings: React.FC = () => {
                     {activeTab === 'system' && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>System Information</h3>
+                                <h3 style={{ margin: 0 }}>{t('settings.system.title')}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
-                                        <span style={{ color: 'var(--color-gray-600)' }}>System Version</span>
+                                        <span style={{ color: 'var(--color-gray-600)' }}>{t('settings.system.version')}</span>
                                         <strong>v1.0.0</strong>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
-                                        <span style={{ color: 'var(--color-gray-600)' }}>Database Status</span>
-                                        <Badge variant="success">Connected</Badge>
+                                        <span style={{ color: 'var(--color-gray-600)' }}>{t('settings.system.dbStatus')}</span>
+                                        <Badge variant="success">{t('settings.system.connected')}</Badge>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
-                                        <span style={{ color: 'var(--color-gray-600)' }}>Last Backup</span>
+                                        <span style={{ color: 'var(--color-gray-600)' }}>{t('settings.system.lastBackup')}</span>
                                         <strong>2024-12-08 10:30 AM</strong>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-md)' }}>
-                                        <span style={{ color: 'var(--color-gray-600)' }}>Storage Used</span>
+                                        <span style={{ color: 'var(--color-gray-600)' }}>{t('settings.system.storage')}</span>
                                         <strong>2.4 GB / 10 GB</strong>
                                     </div>
 
                                     <div style={{ marginTop: 'var(--spacing-lg)' }}>
                                         <Button variant="outline" fullWidth>
-                                            Run System Diagnostics
+                                            {t('settings.system.diagnostics')}
                                         </Button>
                                     </div>
                                 </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Select, Input } from '../components/UI/Input';
@@ -7,6 +8,7 @@ import { Send, UserPlus } from 'lucide-react';
 import { departments, classifications } from '../data/mockData';
 
 export const DocumentClassification: React.FC = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         classification: 'Confidential',
         department: 'Finance',
@@ -30,47 +32,60 @@ export const DocumentClassification: React.FC = () => {
         setFormData({ ...formData, ccList: formData.ccList.filter(c => c !== cc) });
     };
 
+    const getClassificationLabel = (c: string) => {
+        const key = c.replace(/\s+/g, '').replace(/^\w/, c => c.toLowerCase());
+        return t(`classification.${key}`);
+    };
+
+    const getDepartmentLabel = (d: string) => {
+        return t(`departments.${d.toLowerCase()}`);
+    };
+
+    const getPriorityLabel = (p: string) => {
+        return t(`documentClassification.priorities.${p.toLowerCase()}`);
+    };
+
     return (
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Document Classification & Assignment</h1>
-                    <p className="page-description">Classify document and assign to appropriate personnel</p>
+                    <h1 className="page-title">{t('documentClassification.title')}</h1>
+                    <p className="page-description">{t('documentClassification.description')}</p>
                 </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--spacing-xl)' }}>
                 <Card>
                     <CardHeader>
-                        <h3 style={{ margin: 0 }}>Classification Details</h3>
+                        <h3 style={{ margin: 0 }}>{t('documentClassification.details')}</h3>
                     </CardHeader>
                     <CardBody>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                             <Select
-                                label="Security Classification"
+                                label={t('documentClassification.securityClass')}
                                 value={formData.classification}
                                 onChange={(e) => setFormData({ ...formData, classification: e.target.value })}
-                                options={classifications.map(c => ({ value: c, label: c }))}
-                                helperText="Classification determines access control and SLA timelines"
+                                options={classifications.map(c => ({ value: c, label: getClassificationLabel(c) }))}
+                                helperText={t('documentClassification.securityClassHelper')}
                             />
 
                             <Select
-                                label="Department"
+                                label={t('documentClassification.department')}
                                 value={formData.department}
                                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                                options={departments.map(d => ({ value: d, label: d }))}
+                                options={departments.map(d => ({ value: d, label: getDepartmentLabel(d) }))}
                             />
 
                             <Input
-                                label="Assigned To"
-                                placeholder="Select officer name"
+                                label={t('documentClassification.assignedTo')}
+                                placeholder={t('documentClassification.assignedPlaceholder')}
                                 value={formData.assignedTo}
                                 onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value })}
                             />
 
                             <div>
                                 <label style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                                    Routing Option
+                                    {t('documentClassification.routing')}
                                 </label>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', cursor: 'pointer' }}>
@@ -81,7 +96,7 @@ export const DocumentClassification: React.FC = () => {
                                             checked={formData.routing === 'gm'}
                                             onChange={(e) => setFormData({ ...formData, routing: e.target.value })}
                                         />
-                                        <span>Route to General Manager first</span>
+                                        <span>{t('documentClassification.routeGm')}</span>
                                     </label>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', cursor: 'pointer' }}>
                                         <input
@@ -91,24 +106,24 @@ export const DocumentClassification: React.FC = () => {
                                             checked={formData.routing === 'direct'}
                                             onChange={(e) => setFormData({ ...formData, routing: e.target.value })}
                                         />
-                                        <span>Direct distribution to departments</span>
+                                        <span>{t('documentClassification.routeDirect')}</span>
                                     </label>
                                 </div>
                             </div>
 
                             <div>
                                 <label style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                                    CC List
+                                    {t('documentClassification.ccList')}
                                 </label>
                                 <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
                                     <Input
-                                        placeholder="Enter name or email"
+                                        placeholder={t('documentClassification.ccPlaceholder')}
                                         value={newCC}
                                         onChange={(e) => setNewCC(e.target.value)}
                                         onKeyPress={(e) => e.key === 'Enter' && addCC()}
                                     />
                                     <Button onClick={addCC} icon={<UserPlus size={18} />}>
-                                        Add
+                                        {t('documentClassification.add')}
                                     </Button>
                                 </div>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)' }}>
@@ -134,31 +149,31 @@ export const DocumentClassification: React.FC = () => {
                             </div>
 
                             <Select
-                                label="Priority"
+                                label={t('documentClassification.priority')}
                                 value={formData.priority}
                                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                                 options={[
-                                    { value: 'Low', label: 'Low' },
-                                    { value: 'Medium', label: 'Medium' },
-                                    { value: 'High', label: 'High' },
-                                    { value: 'Critical', label: 'Critical' }
+                                    { value: 'Low', label: getPriorityLabel('Low') },
+                                    { value: 'Medium', label: getPriorityLabel('Medium') },
+                                    { value: 'High', label: getPriorityLabel('High') },
+                                    { value: 'Critical', label: getPriorityLabel('Critical') }
                                 ]}
                             />
 
                             <Input
-                                label="Due Date"
+                                label={t('documentClassification.dueDate')}
                                 type="date"
                                 value={formData.dueDate}
                                 onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                                helperText="Based on security classification SLA"
+                                helperText={t('documentClassification.dueDateHelper')}
                             />
 
                             <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-lg)' }}>
                                 <Button icon={<Send size={18} />}>
-                                    Classify & Assign
+                                    {t('documentClassification.classifyAssign')}
                                 </Button>
                                 <Button variant="outline">
-                                    Save as Draft
+                                    {t('documentClassification.saveDraft')}
                                 </Button>
                             </div>
                         </div>
@@ -168,44 +183,44 @@ export const DocumentClassification: React.FC = () => {
                 <div>
                     <Card>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Classification Guide</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentClassification.guide')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 <div>
-                                    <Badge variant="danger" size="sm">Top Secret</Badge>
+                                    <Badge variant="danger" size="sm">{t('classification.topSecret')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        Highest classification. Unauthorized disclosure could cause exceptionally grave damage.
+                                        {t('documentClassification.topSecretDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="danger" size="sm">Secret</Badge>
+                                    <Badge variant="danger" size="sm">{t('classification.secret')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        Unauthorized disclosure could cause serious damage to national security.
+                                        {t('documentClassification.secretDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="warning" size="sm">Confidential</Badge>
+                                    <Badge variant="warning" size="sm">{t('classification.confidential')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        Unauthorized disclosure could cause damage to government interests.
+                                        {t('documentClassification.confidentialDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="info" size="sm">Restricted</Badge>
+                                    <Badge variant="info" size="sm">{t('classification.restricted')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        Limited distribution within authorized personnel only.
+                                        {t('documentClassification.restrictedDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="gray" size="sm">Internal Use</Badge>
+                                    <Badge variant="gray" size="sm">{t('classification.internalUse')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        For internal government use only.
+                                        {t('documentClassification.internalUseDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="success" size="sm">Open</Badge>
+                                    <Badge variant="success" size="sm">{t('classification.open')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        Public information, no restrictions.
+                                        {t('documentClassification.openDesc')}
                                     </p>
                                 </div>
                             </div>
@@ -214,29 +229,29 @@ export const DocumentClassification: React.FC = () => {
 
                     <Card style={{ marginTop: 'var(--spacing-lg)' }}>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>SLA Timelines</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentClassification.sla')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Top Secret:</span>
-                                    <strong>24 hours</strong>
+                                    <span>{t('classification.topSecret')}:</span>
+                                    <strong>24 {t('common.hours')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Secret:</span>
-                                    <strong>48 hours</strong>
+                                    <span>{t('classification.secret')}:</span>
+                                    <strong>48 {t('common.hours')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Confidential:</span>
-                                    <strong>3 days</strong>
+                                    <span>{t('classification.confidential')}:</span>
+                                    <strong>3 {t('common.days')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Restricted:</span>
-                                    <strong>5 days</strong>
+                                    <span>{t('classification.restricted')}:</span>
+                                    <strong>5 {t('common.days')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>Internal/Open:</span>
-                                    <strong>7 days</strong>
+                                    <span>{t('classification.internalUse')}/{t('classification.open')}:</span>
+                                    <strong>7 {t('common.days')}</strong>
                                 </div>
                             </div>
                         </CardBody>

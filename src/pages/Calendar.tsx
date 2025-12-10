@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { StatusBadge } from '../components/UI/Badge';
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export const Calendar: React.FC = () => {
+    const { t } = useTranslation();
     // State for current month navigation
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -34,10 +36,7 @@ export const Calendar: React.FC = () => {
     const daysInMonth = getDaysInMonth(year, month);
     const firstDay = getFirstDayOfMonth(year, month);
 
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
+    const monthNames = t('calendar.months', { returnObjects: true }) as string[];
 
     // Navigation handlers
     const prevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
@@ -83,18 +82,18 @@ export const Calendar: React.FC = () => {
                 title: doc.title,
                 dueDate: doc.dueDate,
                 assignee: doc.assignedTo,
-                status: 'Scheduled', // Simulated status
+                status: t('calendar.upcomingReminders.scheduled'), // Simulated status
                 classification: doc.classification
             }));
-    }, []);
+    }, [t]);
 
     const [reminders, setReminders] = useState(upcomingReminders);
 
     const handleSendReminder = (id: string) => {
         setReminders(prev => prev.map(rem =>
-            rem.id === id ? { ...rem, status: 'Sent' } : rem
+            rem.id === id ? { ...rem, status: t('calendar.upcomingReminders.sent') } : rem
         ));
-        alert(`Reminder sent for document! Notification dispatched to assignee.`);
+        alert(t('calendar.upcomingReminders.alertSuccess'));
     };
 
     // Calendar Grid Generation
@@ -155,7 +154,7 @@ export const Calendar: React.FC = () => {
                                 borderRadius: '10px',
                                 fontWeight: 'bold'
                             }}>
-                                {dayDocs.length} Due
+                                {dayDocs.length} {t('calendar.due')}
                             </span>
                         )}
                     </div>
@@ -177,7 +176,7 @@ export const Calendar: React.FC = () => {
                         ))}
                         {dayDocs.length > 3 && (
                             <div style={{ fontSize: '10px', color: 'var(--color-gray-500)', paddingLeft: '4px' }}>
-                                + {dayDocs.length - 3} more
+                                + {dayDocs.length - 3} {t('calendar.more')}
                             </div>
                         )}
                     </div>
@@ -192,11 +191,11 @@ export const Calendar: React.FC = () => {
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">Calendar & Reminders</h1>
-                    <p className="page-description">Manage document deadlines and automated notifications</p>
+                    <h1 className="page-title">{t('calendar.title')}</h1>
+                    <p className="page-description">{t('calendar.description')}</p>
                 </div>
                 <div className="page-actions">
-                    <Button variant="outline" onClick={goToToday}>Today</Button>
+                    <Button variant="outline" onClick={goToToday}>{t('calendar.today')}</Button>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', background: 'white', padding: '4px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-gray-300)' }}>
                         <button onClick={prevMonth} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}>
                             <ChevronLeft size={20} />
@@ -208,7 +207,7 @@ export const Calendar: React.FC = () => {
                             <ChevronRight size={20} />
                         </button>
                     </div>
-                    <Button icon={<Bell size={18} />}>Settings</Button>
+                    <Button icon={<Bell size={18} />}>{t('calendar.settings')}</Button>
                 </div>
             </div>
 
@@ -224,7 +223,7 @@ export const Calendar: React.FC = () => {
                                 borderBottom: '1px solid var(--color-gray-200)',
                                 background: 'var(--color-gray-50)'
                             }}>
-                                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                                {(t('calendar.weekdays', { returnObjects: true }) as string[]).map(day => (
                                     <div key={day} style={{
                                         padding: 'var(--spacing-md)',
                                         textAlign: 'center',
@@ -247,7 +246,7 @@ export const Calendar: React.FC = () => {
                     {selectedDateDocs.length > 0 && selectedDate && (
                         <Card>
                             <CardHeader>
-                                <h3 style={{ margin: 0 }}>Documents Due on {selectedDate.toDateString()}</h3>
+                                <h3 style={{ margin: 0 }}>{t('calendar.documentsDueOn', { date: selectedDate.toDateString() })}</h3>
                             </CardHeader>
                             <CardBody>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
@@ -272,14 +271,14 @@ export const Calendar: React.FC = () => {
                                                 <div>
                                                     <h4 style={{ margin: 0, fontSize: 'var(--text-sm)' }}>{doc.title}</h4>
                                                     <p style={{ margin: 0, fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)' }}>
-                                                        {doc.referenceNumber} • Assigned to: {doc.assignedTo}
+                                                        {doc.referenceNumber} • {t('calendar.assignedTo')}: {doc.assignedTo}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
                                                 <StatusBadge status={doc.status} />
                                                 <Button size="sm" variant="outline" icon={<MessageSquare size={14} />}>
-                                                    Details
+                                                    {t('calendar.details')}
                                                 </Button>
                                             </div>
                                         </div>
@@ -296,18 +295,18 @@ export const Calendar: React.FC = () => {
                         <CardHeader>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
                                 <Clock size={20} className="text-primary" />
-                                <h3 style={{ margin: 0 }}>Upcoming Reminders</h3>
+                                <h3 style={{ margin: 0 }}>{t('calendar.upcomingReminders.title')}</h3>
                             </div>
                         </CardHeader>
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', marginBottom: 'var(--spacing-md)' }}>
-                                Automated reminders for documents due within 7 days.
+                                {t('calendar.upcomingReminders.description')}
                             </div>
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 {reminders.length === 0 ? (
                                     <div style={{ textAlign: 'center', padding: 'var(--spacing-lg)', color: 'var(--color-gray-500)' }}>
-                                        No upcoming reminders
+                                        {t('calendar.upcomingReminders.noReminders')}
                                     </div>
                                 ) : (
                                     reminders.map((reminder, idx) => (
@@ -351,7 +350,7 @@ export const Calendar: React.FC = () => {
                                                             gap: '2px'
                                                         }}
                                                     >
-                                                        Send Now <Mail size={12} />
+                                                        {t('calendar.upcomingReminders.sendNow')} <Mail size={12} />
                                                     </button>
                                                 )}
                                             </div>
@@ -364,53 +363,53 @@ export const Calendar: React.FC = () => {
 
                     <Card>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Automation Rules</h3>
+                            <h3 style={{ margin: 0 }}>{t('calendar.automationRules.title')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 <div style={{ display: 'flex', gap: 'var(--spacing-sm)', alignItems: 'flex-start' }}>
                                     <CheckCircle size={16} style={{ color: 'var(--color-success-500)', marginTop: '2px' }} />
                                     <div>
-                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>3 Days Before Due</strong>
-                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>Email to Assignee</p>
+                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>{t('calendar.automationRules.daysBeforeDue_3')}</strong>
+                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>{t('calendar.automationRules.emailToAssignee')}</p>
                                     </div>
                                 </div>
                                 <div style={{ display: 'flex', gap: 'var(--spacing-sm)', alignItems: 'flex-start' }}>
                                     <CheckCircle size={16} style={{ color: 'var(--color-success-500)', marginTop: '2px' }} />
                                     <div>
-                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>1 Day Before Due</strong>
-                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>SMS & Email to Assignee + Manager</p>
+                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>{t('calendar.automationRules.daysBeforeDue_1')}</strong>
+                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>{t('calendar.automationRules.smsAndEmail')}</p>
                                     </div>
                                 </div>
                                 <div style={{ display: 'flex', gap: 'var(--spacing-sm)', alignItems: 'flex-start' }}>
                                     <CheckCircle size={16} style={{ color: 'var(--color-success-500)', marginTop: '2px' }} />
                                     <div>
-                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>Overdue</strong>
-                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>System Alert to Administrator</p>
+                                        <strong style={{ fontSize: 'var(--text-sm)', display: 'block' }}>{t('calendar.automationRules.overdue')}</strong>
+                                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)', margin: 0 }}>{t('calendar.automationRules.systemAlert')}</p>
                                     </div>
                                 </div>
-                                <Button variant="outline" size="sm" fullWidth>Configure Rules</Button>
+                                <Button variant="outline" size="sm" fullWidth>{t('calendar.automationRules.configure')}</Button>
                             </div>
                         </CardBody>
                     </Card>
 
                     <Card>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>Legend</h3>
+                            <h3 style={{ margin: 0 }}>{t('calendar.legend.title')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--text-xs)' }}>
                                     <span style={{ width: '8px', height: '8px', background: 'var(--color-danger-100)', borderRadius: '50%' }}></span>
-                                    <span>Deadline</span>
+                                    <span>{t('calendar.legend.deadline')}</span>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--text-xs)' }}>
                                     <span style={{ width: '8px', height: '8px', background: 'var(--color-primary-100)', borderRadius: '50%' }}></span>
-                                    <span>Selected</span>
+                                    <span>{t('calendar.legend.selected')}</span>
                                 </div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: 'var(--text-xs)' }}>
                                     <span style={{ width: '8px', height: '8px', background: 'var(--color-success-100)', borderRadius: '50%' }}></span>
-                                    <span>Completed</span>
+                                    <span>{t('calendar.legend.completed')}</span>
                                 </div>
                             </div>
                         </CardBody>

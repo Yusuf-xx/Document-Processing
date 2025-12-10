@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Input, Select } from '../components/UI/Input';
@@ -19,6 +20,7 @@ import {
 import { mockUsers } from '../data/mockData';
 
 export const UserManagement: React.FC = () => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterRole, setFilterRole] = useState('all');
     const [filterDept, setFilterDept] = useState('all');
@@ -77,17 +79,17 @@ export const UserManagement: React.FC = () => {
 
     const handleSaveUser = () => {
         if (editingUser) {
-            alert(`User "${formData.name}" updated successfully!`);
+            alert(t('userManagement.updateSuccess', { name: formData.name }));
         } else {
-            alert(`User "${formData.name}" added successfully!`);
+            alert(t('userManagement.addSuccess', { name: formData.name }));
         }
         setShowAddModal(false);
         setEditingUser(null);
     };
 
     const handleDeleteUser = (user: any) => {
-        if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-            alert(`User "${user.name}" deleted successfully!`);
+        if (confirm(t('userManagement.deleteConfirm', { name: user.name }))) {
+            alert(t('userManagement.deleteSuccess', { name: user.name }));
         }
     };
 
@@ -100,16 +102,29 @@ export const UserManagement: React.FC = () => {
         }
     };
 
+    const getRoleLabel = (role: string) => {
+        const keyMap: Record<string, string> = {
+            'Administrator': 'admin',
+            'Officer': 'officer',
+            'Data Entry Clerk': 'clerk'
+        };
+        return t(`userManagement.roles.${keyMap[role] || role.toLowerCase()}`);
+    };
+
+    const getDepartmentLabel = (dept: string) => {
+        return t(`departments.${dept.toLowerCase()}`);
+    };
+
     return (
         <div className="page-content">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">User Management</h1>
-                    <p className="page-description">Manage users, roles, and permissions</p>
+                    <h1 className="page-title">{t('userManagement.title')}</h1>
+                    <p className="page-description">{t('userManagement.description')}</p>
                 </div>
                 <div className="page-actions">
                     <Button icon={<UserPlus size={18} />} onClick={handleAddUser}>
-                        Add New User
+                        {t('userManagement.addUser')}
                     </Button>
                 </div>
             </div>
@@ -133,7 +148,7 @@ export const UserManagement: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Total Users
+                                    {t('userManagement.totalUsers')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.total}
@@ -160,7 +175,7 @@ export const UserManagement: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Active Users
+                                    {t('userManagement.activeUsers')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.active}
@@ -187,7 +202,7 @@ export const UserManagement: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Inactive Users
+                                    {t('userManagement.inactiveUsers')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.inactive}
@@ -214,7 +229,7 @@ export const UserManagement: React.FC = () => {
                             </div>
                             <div>
                                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                    Administrators
+                                    {t('userManagement.administrators')}
                                 </p>
                                 <h3 style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, margin: 0 }}>
                                     {stats.admins}
@@ -230,53 +245,53 @@ export const UserManagement: React.FC = () => {
                 <CardBody>
                     <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 'var(--spacing-md)', alignItems: 'end' }}>
                         <Input
-                            label="Search Users"
-                            placeholder="Search by name or email..."
+                            label={t('userManagement.searchLabel')}
+                            placeholder={t('userManagement.searchPlaceholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             icon={<Search size={18} />}
                         />
 
                         <Select
-                            label="Role"
+                            label={t('userManagement.role')}
                             value={filterRole}
                             onChange={(e) => setFilterRole(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Roles' },
-                                { value: 'Administrator', label: 'Administrator' },
-                                { value: 'Officer', label: 'Officer' },
-                                { value: 'Data Entry Clerk', label: 'Data Entry Clerk' }
+                                { value: 'all', label: t('userManagement.allRoles') },
+                                { value: 'Administrator', label: getRoleLabel('Administrator') },
+                                { value: 'Officer', label: getRoleLabel('Officer') },
+                                { value: 'Data Entry Clerk', label: getRoleLabel('Data Entry Clerk') }
                             ]}
                         />
 
                         <Select
-                            label="Department"
+                            label={t('userManagement.department')}
                             value={filterDept}
                             onChange={(e) => setFilterDept(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Departments' },
-                                { value: 'Finance', label: 'Finance' },
-                                { value: 'HR', label: 'HR' },
-                                { value: 'Security', label: 'Security' },
-                                { value: 'Development', label: 'Development' },
-                                { value: 'Administration', label: 'Administration' }
+                                { value: 'all', label: t('userManagement.allDepartments') || 'All Departments' },
+                                { value: 'Finance', label: getDepartmentLabel('Finance') },
+                                { value: 'HR', label: getDepartmentLabel('HR') },
+                                { value: 'Security', label: getDepartmentLabel('Security') },
+                                { value: 'Development', label: getDepartmentLabel('Development') },
+                                { value: 'Administration', label: getDepartmentLabel('Administration') }
                             ]}
                         />
 
                         <Select
-                            label="Status"
+                            label={t('userManagement.status')}
                             value={filterStatus}
                             onChange={(e) => setFilterStatus(e.target.value)}
                             options={[
-                                { value: 'all', label: 'All Status' },
-                                { value: 'Active', label: 'Active' },
-                                { value: 'Inactive', label: 'Inactive' }
+                                { value: 'all', label: t('userManagement.allStatus') },
+                                { value: 'Active', label: t('userManagement.statusOptions.active') },
+                                { value: 'Inactive', label: t('userManagement.statusOptions.inactive') }
                             ]}
                         />
                     </div>
 
                     <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', margin: 0, marginTop: 'var(--spacing-lg)' }}>
-                        Showing <strong>{filteredUsers.length}</strong> of <strong>{mockUsers.length}</strong> users
+                        {t('userManagement.showingUsers', { filtered: filteredUsers.length, total: mockUsers.length })}
                     </p>
                 </CardBody>
             </Card>
@@ -289,22 +304,22 @@ export const UserManagement: React.FC = () => {
                             <thead>
                                 <tr style={{ borderBottom: '2px solid var(--color-gray-200)', background: 'var(--color-gray-50)' }}>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        User
+                                        {t('common.user')}
                                     </th>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        Email
+                                        {t('userManagement.emailLabel')}
                                     </th>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        Role
+                                        {t('userManagement.role')}
                                     </th>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        Department
+                                        {t('userManagement.department')}
                                     </th>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'left', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        Status
+                                        {t('userManagement.status')}
                                     </th>
                                     <th style={{ padding: 'var(--spacing-md)', textAlign: 'right', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-gray-700)' }}>
-                                        Actions
+                                        {t('common.actions')}
                                     </th>
                                 </tr>
                             </thead>
@@ -335,7 +350,7 @@ export const UserManagement: React.FC = () => {
                                                         {user.name}
                                                     </div>
                                                     <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)' }}>
-                                                        ID: {user.id}
+                                                        {t('userManagement.id')}: {user.id}
                                                     </div>
                                                 </div>
                                             </div>
@@ -348,27 +363,27 @@ export const UserManagement: React.FC = () => {
                                         </td>
                                         <td style={{ padding: 'var(--spacing-md)' }}>
                                             <Badge variant={getRoleBadgeVariant(user.role)}>
-                                                {user.role}
+                                                {getRoleLabel(user.role)}
                                             </Badge>
                                         </td>
                                         <td style={{ padding: 'var(--spacing-md)' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-xs)', fontSize: 'var(--text-sm)' }}>
                                                 <Building size={14} style={{ color: 'var(--color-gray-500)' }} />
-                                                {user.department}
+                                                {getDepartmentLabel(user.department)}
                                             </div>
                                         </td>
                                         <td style={{ padding: 'var(--spacing-md)' }}>
                                             <Badge variant={user.status === 'Active' ? 'success' : 'gray'}>
-                                                {user.status}
+                                                {t(`userManagement.statusOptions.${user.status.toLowerCase()}`)}
                                             </Badge>
                                         </td>
                                         <td style={{ padding: 'var(--spacing-md)', textAlign: 'right' }}>
                                             <div style={{ display: 'flex', gap: 'var(--spacing-sm)', justifyContent: 'flex-end' }}>
                                                 <Button variant="ghost" size="sm" icon={<Edit2 size={16} />} onClick={() => handleEditUser(user)}>
-                                                    Edit
+                                                    {t('common.edit')}
                                                 </Button>
                                                 <Button variant="ghost" size="sm" icon={<Trash2 size={16} />} onClick={() => handleDeleteUser(user)}>
-                                                    Delete
+                                                    {t('common.delete')}
                                                 </Button>
                                             </div>
                                         </td>
@@ -397,7 +412,7 @@ export const UserManagement: React.FC = () => {
                     <Card style={{ width: '500px', maxWidth: '90vw', maxHeight: '90vh', overflow: 'auto' }}>
                         <CardHeader>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                <h3 style={{ margin: 0 }}>{editingUser ? 'Edit User' : 'Add New User'}</h3>
+                                <h3 style={{ margin: 0 }}>{editingUser ? t('userManagement.editUser') : t('userManagement.addUser')}</h3>
                                 <button
                                     onClick={() => setShowAddModal(false)}
                                     style={{
@@ -418,15 +433,15 @@ export const UserManagement: React.FC = () => {
                         <CardBody>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                                 <Input
-                                    label="Full Name"
-                                    placeholder="Enter full name"
+                                    label={t('userManagement.fullName')}
+                                    placeholder={t('userManagement.fullNamePlaceholder')}
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     required
                                 />
 
                                 <Input
-                                    label="Email Address"
+                                    label={t('userManagement.emailLabel')}
                                     type="email"
                                     placeholder="user@gov.my"
                                     value={formData.email}
@@ -435,48 +450,48 @@ export const UserManagement: React.FC = () => {
                                 />
 
                                 <Select
-                                    label="Role"
+                                    label={t('userManagement.role')}
                                     value={formData.role}
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                     options={[
-                                        { value: 'Administrator', label: 'Administrator' },
-                                        { value: 'Officer', label: 'Officer' },
-                                        { value: 'Data Entry Clerk', label: 'Data Entry Clerk' }
+                                        { value: 'Administrator', label: getRoleLabel('Administrator') },
+                                        { value: 'Officer', label: getRoleLabel('Officer') },
+                                        { value: 'Data Entry Clerk', label: getRoleLabel('Data Entry Clerk') }
                                     ]}
                                 />
 
                                 <Select
-                                    label="Department"
+                                    label={t('userManagement.department')}
                                     value={formData.department}
                                     onChange={(e) => setFormData({ ...formData, department: e.target.value })}
                                     options={[
-                                        { value: 'Finance', label: 'Finance' },
-                                        { value: 'HR', label: 'HR' },
-                                        { value: 'Security', label: 'Security' },
-                                        { value: 'Development', label: 'Development' },
-                                        { value: 'Administration', label: 'Administration' },
-                                        { value: 'IT', label: 'IT' },
-                                        { value: 'Legal', label: 'Legal' },
-                                        { value: 'Operations', label: 'Operations' }
+                                        { value: 'Finance', label: getDepartmentLabel('Finance') },
+                                        { value: 'HR', label: getDepartmentLabel('HR') },
+                                        { value: 'Security', label: getDepartmentLabel('Security') },
+                                        { value: 'Development', label: getDepartmentLabel('Development') },
+                                        { value: 'Administration', label: getDepartmentLabel('Administration') },
+                                        { value: 'IT', label: getDepartmentLabel('IT') },
+                                        { value: 'Legal', label: getDepartmentLabel('Legal') },
+                                        { value: 'Operations', label: getDepartmentLabel('Operations') }
                                     ]}
                                 />
 
                                 <Select
-                                    label="Status"
+                                    label={t('userManagement.status')}
                                     value={formData.status}
                                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                                     options={[
-                                        { value: 'Active', label: 'Active' },
-                                        { value: 'Inactive', label: 'Inactive' }
+                                        { value: 'Active', label: t('userManagement.statusOptions.active') },
+                                        { value: 'Inactive', label: t('userManagement.statusOptions.inactive') }
                                     ]}
                                 />
 
                                 <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-md)' }}>
                                     <Button onClick={handleSaveUser} fullWidth>
-                                        {editingUser ? 'Update User' : 'Add User'}
+                                        {editingUser ? t('common.save') : t('common.add')}
                                     </Button>
                                     <Button variant="outline" onClick={() => setShowAddModal(false)} fullWidth>
-                                        Cancel
+                                        {t('common.cancel')}
                                     </Button>
                                 </div>
                             </div>

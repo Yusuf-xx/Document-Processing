@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
     LayoutDashboard,
     FileText,
@@ -15,72 +16,76 @@ import {
     Calendar
 } from 'lucide-react';
 
+import logo from '../../assets/logo.jpg';
+
 interface NavItem {
     path: string;
-    label: string;
+    labelKey: string;
     icon: React.ReactNode;
     badge?: number;
 }
 
 interface NavSection {
-    title: string;
+    titleKey: string;
     items: NavItem[];
 }
 
 const navSections: NavSection[] = [
     {
-        title: 'Main',
+        titleKey: 'nav.main',
         items: [
-            { path: '/', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
+            { path: '/', labelKey: 'nav.dashboard', icon: <LayoutDashboard size={20} /> },
+            { path: '/calendar', labelKey: 'nav.calendar', icon: <Calendar size={20} /> },
         ]
     },
     {
-        title: 'Document Processing',
+        titleKey: 'nav.documentProcessing',
         items: [
-            { path: '/receipt', label: 'Document Receipt', icon: <FileText size={20} /> },
-            { path: '/scan', label: 'Scanning', icon: <Scan size={20} /> },
-            { path: '/verification', label: 'OCR Verification', icon: <CheckSquare size={20} />, badge: 3 },
-            { path: '/classification', label: 'Classification', icon: <FolderTree size={20} /> },
+            { path: '/receipt', labelKey: 'nav.documentReceipt', icon: <FileText size={20} /> },
+            { path: '/scan', labelKey: 'nav.scanning', icon: <Scan size={20} /> },
+            { path: '/verification', labelKey: 'nav.ocrVerification', icon: <CheckSquare size={20} />, badge: 3 },
+            { path: '/classification', labelKey: 'nav.classification', icon: <FolderTree size={20} /> },
         ]
     },
     {
-        title: 'Monitoring',
+        titleKey: 'nav.monitoring',
         items: [
-            { path: '/tracking', label: 'Document Tracking', icon: <Activity size={20} />, badge: 12 },
-            { path: '/workflow', label: 'Workflow', icon: <Bell size={20} /> },
-            { path: '/calendar', label: 'Calendar', icon: <Calendar size={20} /> },
-            { path: '/archive', label: 'Archive', icon: <Archive size={20} /> },
+            { path: '/tracking', labelKey: 'nav.documentTracking', icon: <Activity size={20} />, badge: 12 },
+            { path: '/workflow', labelKey: 'nav.workflow', icon: <Bell size={20} /> },
+
+            { path: '/archive', labelKey: 'nav.archive', icon: <Archive size={20} /> },
         ]
     },
     {
-        title: 'Administration',
+        titleKey: 'nav.administration',
         items: [
-            { path: '/users', label: 'User Management', icon: <Users size={20} /> },
-            { path: '/reports', label: 'Reports', icon: <BarChart3 size={20} /> },
-            { path: '/settings', label: 'Settings', icon: <Settings size={20} /> },
+            { path: '/users', labelKey: 'nav.userManagement', icon: <Users size={20} /> },
+            { path: '/reports', labelKey: 'nav.reports', icon: <BarChart3 size={20} /> },
+            { path: '/settings', labelKey: 'nav.settings', icon: <Settings size={20} /> },
         ]
     }
 ];
 
 export const Sidebar: React.FC = () => {
     const location = useLocation();
+    const { t } = useTranslation();
 
     return (
         <div className="sidebar">
             <div className="sidebar-header">
                 <div className="sidebar-logo">
-                    <div className="sidebar-logo-icon">📄</div>
+                    <img src={logo} alt="Logo" className="sidebar-logo-icon" style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
                     <div className="sidebar-logo-text">
-                        <h1>IDCM System</h1>
-                        <p>Document Management</p>
+                        <h1>{t('app.title')}</h1>
+                        <p>{t('app.subtitle')}</p>
                     </div>
                 </div>
             </div>
 
             <nav className="sidebar-nav">
                 {navSections.map((section) => (
-                    <div key={section.title} className="nav-section">
-                        <div className="nav-section-title">{section.title}</div>
+                    <div key={section.titleKey} className="nav-section">
+                        <div className="nav-section-title">{t(section.titleKey)}</div>
                         {section.items.map((item) => (
                             <Link
                                 key={item.path}
@@ -88,7 +93,7 @@ export const Sidebar: React.FC = () => {
                                 className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
                             >
                                 <span className="nav-item-icon">{item.icon}</span>
-                                <span>{item.label}</span>
+                                <span>{t(item.labelKey)}</span>
                                 {item.badge && <span className="nav-item-badge">{item.badge}</span>}
                             </Link>
                         ))}
