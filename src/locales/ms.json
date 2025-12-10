@@ -578,5 +578,26 @@
             "selected": "Dipilih",
             "completed": "Selesai"
         }
+    },
+    "chat": {
+        "title": "Pembantu AI",
+        "subtitle": "Rakan pandangan dokumen pintar anda",
+        "welcome": "Bagaimana saya boleh membantu anda hari ini?",
+        "suggestions": {
+            "summary": "Ringkaskan laporan terkini",
+            "analysis": "Analisis trend dokumen",
+            "draft": "Draf surat iringan",
+            "search": "Cari dokumen lewat"
+        },
+        "inputPlaceholder": "Tanya saya apa sahaja mengenai dokumen anda...",
+        "history": "Sejarah Sembang",
+        "newChat": "Sembang Baru",
+        "thinking": "Sedang berfikir...",
+        "generatedDocument": "Dokumen berjaya dijana",
+        "download": "Muat Turun",
+        "widget": {
+            "title": "Pembantu IDCM",
+            "placeholder": "Taip soalan anda..."
+        }
     }
 }

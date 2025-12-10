@@ -13,7 +13,8 @@ import {
     BarChart3,
     Settings,
     Bell,
-    Calendar
+    Calendar,
+    MessageSquare
 } from 'lucide-react';
 
 import logo from '../../assets/logo.jpg';
@@ -36,6 +37,7 @@ const navSections: NavSection[] = [
         items: [
             { path: '/', labelKey: 'nav.dashboard', icon: <LayoutDashboard size={20} /> },
             { path: '/calendar', labelKey: 'nav.calendar', icon: <Calendar size={20} /> },
+            { path: '/chat', labelKey: 'chat.title', icon: <MessageSquare size={20} /> },
         ]
     },
     {

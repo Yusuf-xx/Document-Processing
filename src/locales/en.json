@@ -590,5 +590,26 @@
             "selected": "Selected",
             "completed": "Completed"
         }
+    },
+    "chat": {
+        "title": "AI Assistant",
+        "subtitle": "Your intelligent document insights companion",
+        "welcome": "How can I help you today?",
+        "suggestions": {
+            "summary": "Summarize recent reports",
+            "analysis": "Analyze document trends",
+            "draft": "Draft a cover letter",
+            "search": "Find overdue documents"
+        },
+        "inputPlaceholder": "Ask me anything about your documents...",
+        "history": "Chat History",
+        "newChat": "New Chat",
+        "thinking": "Thinking...",
+        "generatedDocument": "Document generated successfully",
+        "download": "Download",
+        "widget": {
+            "title": "IDCM Assistant",
+            "placeholder": "Type your question..."
+        }
     }
 }

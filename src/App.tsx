@@ -15,6 +15,8 @@ import { UserManagement } from './pages/UserManagement';
 import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 import { Calendar } from './pages/Calendar';
+import { Chat } from './pages/Chat';
+import { ChatWidget } from './components/ChatWidget';
 import './App.css';
 
 function App() {
@@ -50,8 +52,10 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <ChatWidget />
         </div>
       </div>
     </Router>
