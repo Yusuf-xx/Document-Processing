@@ -7,6 +7,7 @@
         "main": "Utama",
         "dashboard": "Papan Pemuka",
         "calendar": "Kalendar",
+        "aiAssistant": "Pembantu AI",
         "documentProcessing": "Pemprosesan Dokumen",
         "documentReceipt": "Penerimaan Dokumen",
         "scanning": "Pengimbasan",
@@ -581,23 +582,50 @@
     },
     "chat": {
         "title": "Pembantu AI",
-        "subtitle": "Rakan pandangan dokumen pintar anda",
-        "welcome": "Bagaimana saya boleh membantu anda hari ini?",
-        "suggestions": {
-            "summary": "Ringkaskan laporan terkini",
-            "analysis": "Analisis trend dokumen",
-            "draft": "Draf surat iringan",
-            "search": "Cari dokumen lewat"
+        "description": "Dapatkan pandangan pintar dan jana dokumen menggunakan AI",
+        "welcomeMessage": "Hai! Saya pembantu AI anda. Saya boleh membantu anda menganalisis dokumen, menjana laporan, mencipta pembentangan, dan memberikan pandangan tentang data sistem anda. Bagaimana saya boleh membantu anda hari ini?",
+        "sampleResponse": "Saya berbesar hati untuk membantu anda dengan itu! Berdasarkan data sistem anda, saya boleh menjana dokumen berikut untuk anda:",
+        "you": "Anda",
+        "assistant": "Pembantu AI",
+        "send": "Hantar",
+        "generate": "Jana",
+        "inputPlaceholder": "Tanya saya apa-apa tentang dokumen anda atau minta analitik...",
+        "inputHint": "Tekan Enter untuk hantar, Shift+Enter untuk baris baharu",
+        "suggestedDocuments": "Dokumen Dicadangkan",
+        "quickActions": {
+            "title": "Tindakan Pantas",
+            "summarize": "Ringkaskan dokumen terkini",
+            "generateReport": "Jana laporan bulanan",
+            "analyzeData": "Analisis trend dokumen",
+            "createPresentation": "Cipta pembentangan eksekutif"
         },
-        "inputPlaceholder": "Tanya saya apa sahaja mengenai dokumen anda...",
-        "history": "Sejarah Sembang",
-        "newChat": "Sembang Baru",
-        "thinking": "Sedang berfikir...",
-        "generatedDocument": "Dokumen berjaya dijana",
-        "download": "Muat Turun",
-        "widget": {
-            "title": "Pembantu IDCM",
-            "placeholder": "Taip soalan anda..."
+        "capabilities": {
+            "title": "Apa Yang Saya Boleh Lakukan",
+            "analyze": "Menganalisis corak dan trend dokumen",
+            "generate": "Menjana laporan, pembentangan, dan hamparan",
+            "insights": "Memberikan pandangan berdasarkan data",
+            "automate": "Mengautomasikan aliran kerja dokumen"
+        },
+        "actions": {
+            "monthlyReport": "Laporan Dokumen Bulanan",
+            "monthlyReportDesc": "Ringkasan menyeluruh semua aktiviti dokumen bulan ini",
+            "dataAnalysis": "Hamparan Analitik Dokumen",
+            "dataAnalysisDesc": "Pecahan terperinci masa pemprosesan dan metrik kecekapan",
+            "executiveSummary": "Pembentangan Ringkasan Eksekutif",
+            "executiveSummaryDesc": "Gambaran peringkat tinggi untuk pembentangan pihak berkepentingan"
         }
+    },
+    "chatWidget": {
+        "title": "Pembantu AI",
+        "subtitle": "Dalam Talian",
+        "welcomeMessage": "Hai! Bagaimana saya boleh membantu anda hari ini?",
+        "sampleResponse": "Saya boleh membantu anda dengan itu! Adakah anda mahu saya memberikan butiran lanjut atau menjana dokumen?",
+        "inputPlaceholder": "Taip mesej anda...",
+        "send": "Hantar",
+        "openChat": "Buka Pembantu AI",
+        "close": "Tutup",
+        "minimize": "Minimumkan",
+        "maximize": "Maksimumkan",
+        "openFullChat": "Buka sembang penuh →"
     }
 }

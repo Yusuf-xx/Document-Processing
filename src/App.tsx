@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Header } from './components/Layout/Header';
+import { ChatWidget } from './components/ChatWidget';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { DocumentReceipt } from './pages/DocumentReceipt';
@@ -16,7 +17,6 @@ import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 import { Calendar } from './pages/Calendar';
 import { Chat } from './pages/Chat';
-import { ChatWidget } from './components/ChatWidget';
 import './App.css';
 
 function App() {
@@ -51,12 +51,12 @@ function App() {
             <Route path="/users" element={<UserManagement />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/settings" element={<Settings />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-          <ChatWidget />
         </div>
+        <ChatWidget />
       </div>
     </Router>
   );

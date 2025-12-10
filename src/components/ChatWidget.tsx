@@ -1,106 +1,166 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MessageCircle, X, Send, Bot } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { MessageCircle, X, Send, Minimize2, Maximize2 } from 'lucide-react';
 import './ChatWidget.css';
 
 interface Message {
     id: string;
-    text: string;
-    sender: 'user' | 'ai';
+    role: 'user' | 'assistant';
+    content: string;
 }
 
 export const ChatWidget: React.FC = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
+    const [isMinimized, setIsMinimized] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        { id: '1', text: t('chat.welcome'), sender: 'ai' }
+        {
+            id: '1',
+            role: 'assistant',
+            content: t('chatWidget.welcomeMessage'),
+        }
     ]);
-    const [input, setInput] = useState('');
-    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const [inputValue, setInputValue] = useState('');
 
-    // Hide widget on the main Chat page
+    // Update welcome message when language changes
+    useEffect(() => {
+        setMessages(prev => {
+            const updatedMessages = [...prev];
+            if (updatedMessages.length > 0 && updatedMessages[0].id === '1') {
+                updatedMessages[0] = {
+                    ...updatedMessages[0],
+                    content: t('chatWidget.welcomeMessage')
+                };
+            }
+            return updatedMessages;
+        });
+    }, [i18n.language, t]);
+
+    // Hide widget on chat page
     if (location.pathname === '/chat') {
         return null;
     }
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
-    useEffect(() => {
-        if (isOpen) {
-            scrollToBottom();
-        }
-    }, [messages, isOpen]);
-
     const handleSend = () => {
-        if (!input.trim()) return;
+        if (!inputValue.trim()) return;
 
-        const userMsg: Message = {
+        const userMessage: Message = {
             id: Date.now().toString(),
-            text: input,
-            sender: 'user'
+            role: 'user',
+            content: inputValue,
         };
 
-        setMessages(prev => [...prev, userMsg]);
-        setInput('');
+        setMessages(prev => [...prev, userMessage]);
+        setInputValue('');
 
-        // Mock response
+        // Simulate AI response
         setTimeout(() => {
-            const aiMsg: Message = {
+            const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
-                text: "I'll look into that for you. This is a quick response from the widget. For more detailed analysis, visit the main Chat page.",
-                sender: 'ai'
+                role: 'assistant',
+                content: t('chatWidget.sampleResponse'),
             };
-            setMessages(prev => [...prev, aiMsg]);
+            setMessages(prev => [...prev, aiMessage]);
         }, 1000);
     };
 
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        }
+    };
+
     return (
-        <div className={`chat-widget-container ${isOpen ? 'open' : ''}`}>
-            {isOpen && (
-                <div className="chat-widget-window">
-                    <div className="chat-widget-header">
-                        <div className="header-title">
-                            <Bot size={20} />
-                            <span>{t('chat.widget.title')}</span>
-                        </div>
-                        <button className="close-btn" onClick={() => setIsOpen(false)}>
-                            <X size={18} />
-                        </button>
-                    </div>
-
-                    <div className="chat-widget-messages">
-                        {messages.map((msg) => (
-                            <div key={msg.id} className={`widget-message ${msg.sender}`}>
-                                <div className="bubble">
-                                    {msg.text}
-                                </div>
-                            </div>
-                        ))}
-                        <div ref={messagesEndRef} />
-                    </div>
-
-                    <div className="chat-widget-input">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder={t('chat.widget.placeholder')}
-                        />
-                        <button onClick={handleSend} disabled={!input.trim()}>
-                            <Send size={16} />
-                        </button>
-                    </div>
-                </div>
+        <>
+            {/* Chat Widget Button */}
+            {!isOpen && (
+                <button
+                    className="chat-widget-button"
+                    onClick={() => setIsOpen(true)}
+                    aria-label={t('chatWidget.openChat')}
+                >
+                    <MessageCircle size={24} />
+                    <span className="chat-widget-badge">AI</span>
+                </button>
             )}
 
-            <button className="chat-widget-toggle" onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-            </button>
-        </div>
+            {/* Chat Widget Window */}
+            {isOpen && (
+                <div className={`chat-widget-window ${isMinimized ? 'minimized' : ''}`}>
+                    {/* Header */}
+                    <div className="chat-widget-header">
+                        <div className="chat-widget-header-content">
+                            <div className="chat-widget-avatar">
+                                <MessageCircle size={20} />
+                            </div>
+                            <div>
+                                <h3>{t('chatWidget.title')}</h3>
+                                <p>{t('chatWidget.subtitle')}</p>
+                            </div>
+                        </div>
+                        <div className="chat-widget-header-actions">
+                            <button
+                                onClick={() => setIsMinimized(!isMinimized)}
+                                aria-label={isMinimized ? t('chatWidget.maximize') : t('chatWidget.minimize')}
+                            >
+                                {isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
+                            </button>
+                            <button
+                                onClick={() => setIsOpen(false)}
+                                aria-label={t('chatWidget.close')}
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Messages */}
+                    {!isMinimized && (
+                        <>
+                            <div className="chat-widget-messages">
+                                {messages.map((message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`chat-widget-message ${message.role === 'user' ? 'user' : 'assistant'}`}
+                                    >
+                                        <div className="chat-widget-message-content">
+                                            {message.content}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Input */}
+                            <div className="chat-widget-input-container">
+                                <input
+                                    type="text"
+                                    className="chat-widget-input"
+                                    placeholder={t('chatWidget.inputPlaceholder')}
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                />
+                                <button
+                                    className="chat-widget-send-button"
+                                    onClick={handleSend}
+                                    disabled={!inputValue.trim()}
+                                    aria-label={t('chatWidget.send')}
+                                >
+                                    <Send size={18} />
+                                </button>
+                            </div>
+
+                            {/* Footer */}
+                            <div className="chat-widget-footer">
+                                <a href="/chat">{t('chatWidget.openFullChat')}</a>
+                            </div>
+                        </>
+                    )}
+                </div>
+            )}
+        </>
     );
 };

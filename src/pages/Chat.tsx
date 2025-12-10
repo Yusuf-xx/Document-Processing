@@ -1,40 +1,60 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Card, CardBody } from '../components/UI/Card';
+import { Button } from '../components/UI/Button';
 import {
     Send,
-    Paperclip,
-    Bot,
-    User,
-    Plus,
-    MessageSquare,
     FileText,
-    MoreHorizontal,
+    FileSpreadsheet,
+    Presentation,
     Download,
-    Cpu
+    Sparkles,
+    Bot,
+    User
 } from 'lucide-react';
 import './Chat.css';
 
 interface Message {
     id: string;
-    text: string;
-    sender: 'user' | 'ai';
+    role: 'user' | 'assistant';
+    content: string;
     timestamp: Date;
-    attachments?: Array<{ type: string; name: string; url: string }>;
+    actions?: DocumentAction[];
+}
+
+interface DocumentAction {
+    type: 'document' | 'spreadsheet' | 'presentation';
+    title: string;
+    description: string;
 }
 
 export const Chat: React.FC = () => {
-    const { t } = useTranslation();
-    const [input, setInput] = useState('');
+    const { t, i18n } = useTranslation();
     const [messages, setMessages] = useState<Message[]>([
         {
             id: '1',
-            text: t('chat.welcome'),
-            sender: 'ai',
-            timestamp: new Date()
+            role: 'assistant',
+            content: t('chat.welcomeMessage'),
+            timestamp: new Date(),
         }
     ]);
+    const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Update welcome message when language changes
+    useEffect(() => {
+        setMessages(prev => {
+            const updatedMessages = [...prev];
+            if (updatedMessages.length > 0 && updatedMessages[0].id === '1') {
+                updatedMessages[0] = {
+                    ...updatedMessages[0],
+                    content: t('chat.welcomeMessage')
+                };
+            }
+            return updatedMessages;
+        });
+    }, [i18n.language, t]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -44,58 +64,45 @@ export const Chat: React.FC = () => {
         scrollToBottom();
     }, [messages]);
 
-    // Ensure we have a welcome message when the component mounts
-    useEffect(() => {
-        if (messages.length === 0) {
-            setMessages([{
-                id: '1',
-                text: t('chat.welcome'),
-                sender: 'ai',
-                timestamp: new Date()
-            }]);
-        }
-    }, []);
-
     const handleSend = () => {
-        if (!input.trim()) return;
+        if (!inputValue.trim()) return;
 
         const userMessage: Message = {
             id: Date.now().toString(),
-            text: input,
-            sender: 'user',
-            timestamp: new Date()
+            role: 'user',
+            content: inputValue,
+            timestamp: new Date(),
         };
 
         setMessages(prev => [...prev, userMessage]);
-        setInput('');
+        setInputValue('');
         setIsTyping(true);
 
-        // Mock AI response
+        // Simulate AI response
         setTimeout(() => {
-            let aiResponseText = "I can help you with that. ";
-            const attachments = [];
-
-            if (input.toLowerCase().includes('report') || input.toLowerCase().includes('laporan')) {
-                aiResponseText += t('chat.generatedDocument');
-                attachments.push({
-                    type: 'pdf',
-                    name: 'Monthly_Report_2024.pdf',
-                    url: '#'
-                });
-            } else if (input.toLowerCase().includes('summary') || input.toLowerCase().includes('ringkasan')) {
-                aiResponseText += "Here is a summary of your recent documents: 3 approved, 2 pending review, and 1 rejected.";
-            } else {
-                aiResponseText += t('chat.suggestions.analysis');
-            }
-
             const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
-                text: aiResponseText,
-                sender: 'ai',
+                role: 'assistant',
+                content: t('chat.sampleResponse'),
                 timestamp: new Date(),
-                attachments: attachments.length > 0 ? attachments : undefined
+                actions: [
+                    {
+                        type: 'document',
+                        title: t('chat.actions.monthlyReport'),
+                        description: t('chat.actions.monthlyReportDesc')
+                    },
+                    {
+                        type: 'spreadsheet',
+                        title: t('chat.actions.dataAnalysis'),
+                        description: t('chat.actions.dataAnalysisDesc')
+                    },
+                    {
+                        type: 'presentation',
+                        title: t('chat.actions.executiveSummary'),
+                        description: t('chat.actions.executiveSummaryDesc')
+                    }
+                ]
             };
-
             setMessages(prev => [...prev, aiMessage]);
             setIsTyping(false);
         }, 1500);
@@ -108,126 +115,171 @@ export const Chat: React.FC = () => {
         }
     };
 
+    const getDocumentIcon = (type: string) => {
+        switch (type) {
+            case 'document':
+                return <FileText size={20} />;
+            case 'spreadsheet':
+                return <FileSpreadsheet size={20} />;
+            case 'presentation':
+                return <Presentation size={20} />;
+            default:
+                return <FileText size={20} />;
+        }
+    };
+
+    const quickActions = [
+        { label: t('chat.quickActions.summarize'), icon: <Sparkles size={16} /> },
+        { label: t('chat.quickActions.generateReport'), icon: <FileText size={16} /> },
+        { label: t('chat.quickActions.analyzeData'), icon: <FileSpreadsheet size={16} /> },
+        { label: t('chat.quickActions.createPresentation'), icon: <Presentation size={16} /> },
+    ];
+
     return (
-        <div className="chat-container">
-            <div className="chat-sidebar">
-                <button className="new-chat-btn">
-                    <Plus size={16} />
-                    {t('chat.newChat')}
-                </button>
-                <div className="chat-history">
-                    <div className="history-label">{t('chat.history')}</div>
-                    <div className="history-item active">
-                        <MessageSquare size={16} />
-                        <span>Document Analysis 2024</span>
-                    </div>
-                    <div className="history-item">
-                        <MessageSquare size={16} />
-                        <span>Pending Reviews</span>
-                    </div>
-                    <div className="history-item">
-                        <MessageSquare size={16} />
-                        <span>SLA Report Q3</span>
-                    </div>
-                </div>
-                <div className="sidebar-footer">
-                    <div className="user-profile">
-                        <div className="avatar">A</div>
-                        <div className="user-info">
-                            <span className="name">Admin User</span>
-                            <span className="role">Administrator</span>
-                        </div>
-                    </div>
+        <div className="page-content chat-page">
+            <div className="page-header">
+                <div>
+                    <h1 className="page-title">{t('chat.title')}</h1>
+                    <p className="page-description">{t('chat.description')}</p>
                 </div>
             </div>
 
-            <div className="chat-main">
-                <div className="chat-header">
-                    <div className="model-selector">
-                        <Cpu size={18} />
-                        <span>IDCM AI Model v2.0</span>
-                    </div>
-                    <div className="header-actions">
-                        <MoreHorizontal size={20} />
-                    </div>
+            <div className="chat-container">
+                {/* Sidebar with Quick Actions */}
+                <div className="chat-sidebar">
+                    <Card>
+                        <CardBody>
+                            <h3 className="chat-sidebar-title">{t('chat.quickActions.title')}</h3>
+                            <div className="quick-actions-list">
+                                {quickActions.map((action, index) => (
+                                    <button
+                                        key={index}
+                                        className="quick-action-btn"
+                                        onClick={() => setInputValue(action.label)}
+                                    >
+                                        {action.icon}
+                                        <span>{action.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </CardBody>
+                    </Card>
+
+                    <Card className="chat-info-card">
+                        <CardBody>
+                            <h4 className="chat-info-title">{t('chat.capabilities.title')}</h4>
+                            <ul className="chat-capabilities-list">
+                                <li>{t('chat.capabilities.analyze')}</li>
+                                <li>{t('chat.capabilities.generate')}</li>
+                                <li>{t('chat.capabilities.insights')}</li>
+                                <li>{t('chat.capabilities.automate')}</li>
+                            </ul>
+                        </CardBody>
+                    </Card>
                 </div>
 
-                <div className="messages-area">
-                    {messages.map((msg) => (
-                        <div key={msg.id} className={`message-wrapper ${msg.sender}`}>
-                            <div className="message-avatar">
-                                {msg.sender === 'ai' ? <Bot size={20} /> : <User size={20} />}
-                            </div>
-                            <div className="message-content">
-                                <div className="message-author">
-                                    {msg.sender === 'ai' ? t('chat.title') : 'You'}
-                                </div>
-                                <div className="message-bubble">
-                                    {msg.text}
-                                    {msg.attachments && (
-                                        <div className="message-attachments">
-                                            {msg.attachments.map((att, idx) => (
-                                                <div key={idx} className="attachment-card">
-                                                    <div className="attachment-icon">
-                                                        <FileText size={24} />
-                                                    </div>
-                                                    <div className="attachment-info">
-                                                        <span className="attachment-name">{att.name}</span>
-                                                        <span className="attachment-type">{att.type.toUpperCase()}</span>
-                                                    </div>
-                                                    <button className="download-btn">
-                                                        <Download size={16} />
-                                                    </button>
-                                                </div>
-                                            ))}
+                {/* Main Chat Area */}
+                <div className="chat-main">
+                    <Card className="chat-messages-card">
+                        <CardBody className="chat-messages-body">
+                            <div className="chat-messages">
+                                {messages.map((message) => (
+                                    <div
+                                        key={message.id}
+                                        className={`chat-message ${message.role === 'user' ? 'user-message' : 'assistant-message'}`}
+                                    >
+                                        <div className="message-avatar">
+                                            {message.role === 'user' ? (
+                                                <User size={20} />
+                                            ) : (
+                                                <Bot size={20} />
+                                            )}
                                         </div>
-                                    )}
-                                </div>
-                                <div className="message-time">
-                                    {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    {isTyping && (
-                        <div className="message-wrapper ai">
-                            <div className="message-avatar">
-                                <Bot size={20} />
-                            </div>
-                            <div className="message-content">
-                                <div className="typing-indicator">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
+                                        <div className="message-content">
+                                            <div className="message-header">
+                                                <span className="message-role">
+                                                    {message.role === 'user' ? t('chat.you') : t('chat.assistant')}
+                                                </span>
+                                                <span className="message-time">
+                                                    {message.timestamp.toLocaleTimeString()}
+                                                </span>
+                                            </div>
+                                            <div className="message-text">{message.content}</div>
 
-                <div className="input-area">
-                    <div className="input-container">
-                        <button className="attach-btn">
-                            <Paperclip size={20} />
-                        </button>
-                        <textarea
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            placeholder={t('chat.inputPlaceholder')}
-                            rows={1}
-                        />
-                        <button
-                            className={`send-btn ${input.trim() ? 'active' : ''}`}
-                            onClick={handleSend}
-                            disabled={!input.trim()}
-                        >
-                            <Send size={18} />
-                        </button>
-                    </div>
-                    <div className="input-footer">
-                        AI can make mistakes. Please verify important information.
+                                            {/* Document Actions */}
+                                            {message.actions && message.actions.length > 0 && (
+                                                <div className="message-actions">
+                                                    <p className="actions-label">{t('chat.suggestedDocuments')}</p>
+                                                    <div className="document-actions-grid">
+                                                        {message.actions.map((action, index) => (
+                                                            <div key={index} className="document-action-card">
+                                                                <div className="document-action-icon">
+                                                                    {getDocumentIcon(action.type)}
+                                                                </div>
+                                                                <div className="document-action-content">
+                                                                    <h4>{action.title}</h4>
+                                                                    <p>{action.description}</p>
+                                                                </div>
+                                                                <Button
+                                                                    size="sm"
+                                                                    variant="outline"
+                                                                    icon={<Download size={16} />}
+                                                                >
+                                                                    {t('chat.generate')}
+                                                                </Button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {isTyping && (
+                                    <div className="chat-message assistant-message">
+                                        <div className="message-avatar">
+                                            <Bot size={20} />
+                                        </div>
+                                        <div className="message-content">
+                                            <div className="typing-indicator">
+                                                <span></span>
+                                                <span></span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div ref={messagesEndRef} />
+                            </div>
+                        </CardBody>
+                    </Card>
+
+                    {/* Input Area */}
+                    <div className="chat-input-container">
+                        <Card>
+                            <CardBody className="chat-input-body">
+                                <textarea
+                                    className="chat-input"
+                                    placeholder={t('chat.inputPlaceholder')}
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                    rows={3}
+                                />
+                                <div className="chat-input-actions">
+                                    <span className="chat-input-hint">{t('chat.inputHint')}</span>
+                                    <Button
+                                        onClick={handleSend}
+                                        disabled={!inputValue.trim()}
+                                        icon={<Send size={18} />}
+                                    >
+                                        {t('chat.send')}
+                                    </Button>
+                                </div>
+                            </CardBody>
+                        </Card>
                     </div>
                 </div>
             </div>

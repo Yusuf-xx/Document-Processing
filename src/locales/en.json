@@ -7,6 +7,7 @@
         "main": "Main",
         "dashboard": "Dashboard",
         "calendar": "Calendar",
+        "aiAssistant": "AI Assistant",
         "documentProcessing": "Document Processing",
         "documentReceipt": "Document Receipt",
         "scanning": "Scanning",
@@ -593,23 +594,50 @@
     },
     "chat": {
         "title": "AI Assistant",
-        "subtitle": "Your intelligent document insights companion",
-        "welcome": "How can I help you today?",
-        "suggestions": {
-            "summary": "Summarize recent reports",
-            "analysis": "Analyze document trends",
-            "draft": "Draft a cover letter",
-            "search": "Find overdue documents"
+        "description": "Get intelligent insights and generate documents using AI",
+        "welcomeMessage": "Hello! I'm your AI assistant. I can help you analyze documents, generate reports, create presentations, and provide insights about your system data. How can I assist you today?",
+        "sampleResponse": "I'd be happy to help you with that! Based on your system data, I can generate the following documents for you:",
+        "you": "You",
+        "assistant": "AI Assistant",
+        "send": "Send",
+        "generate": "Generate",
+        "inputPlaceholder": "Ask me anything about your documents or request analytics...",
+        "inputHint": "Press Enter to send, Shift+Enter for new line",
+        "suggestedDocuments": "Suggested Documents",
+        "quickActions": {
+            "title": "Quick Actions",
+            "summarize": "Summarize recent documents",
+            "generateReport": "Generate monthly report",
+            "analyzeData": "Analyze document trends",
+            "createPresentation": "Create executive presentation"
         },
-        "inputPlaceholder": "Ask me anything about your documents...",
-        "history": "Chat History",
-        "newChat": "New Chat",
-        "thinking": "Thinking...",
-        "generatedDocument": "Document generated successfully",
-        "download": "Download",
-        "widget": {
-            "title": "IDCM Assistant",
-            "placeholder": "Type your question..."
+        "capabilities": {
+            "title": "What I Can Do",
+            "analyze": "Analyze document patterns and trends",
+            "generate": "Generate reports, presentations, and spreadsheets",
+            "insights": "Provide data-driven insights",
+            "automate": "Automate document workflows"
+        },
+        "actions": {
+            "monthlyReport": "Monthly Document Report",
+            "monthlyReportDesc": "Comprehensive overview of all document activities this month",
+            "dataAnalysis": "Document Analytics Spreadsheet",
+            "dataAnalysisDesc": "Detailed breakdown of processing times and efficiency metrics",
+            "executiveSummary": "Executive Summary Presentation",
+            "executiveSummaryDesc": "High-level overview for stakeholder presentation"
         }
+    },
+    "chatWidget": {
+        "title": "AI Assistant",
+        "subtitle": "Online",
+        "welcomeMessage": "Hi! How can I help you today?",
+        "sampleResponse": "I can help you with that! Would you like me to provide more details or generate a document?",
+        "inputPlaceholder": "Type your message...",
+        "send": "Send",
+        "openChat": "Open AI Assistant",
+        "close": "Close",
+        "minimize": "Minimize",
+        "maximize": "Maximize",
+        "openFullChat": "Open full chat →"
     }
 }

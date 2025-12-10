@@ -14,7 +14,7 @@ import {
     Settings,
     Bell,
     Calendar,
-    MessageSquare
+    MessageCircle
 } from 'lucide-react';
 
 import logo from '../../assets/logo.jpg';
@@ -35,35 +35,35 @@ const navSections: NavSection[] = [
     {
         titleKey: 'nav.main',
         items: [
-            { path: '/', labelKey: 'nav.dashboard', icon: <LayoutDashboard size={20} /> },
-            { path: '/calendar', labelKey: 'nav.calendar', icon: <Calendar size={20} /> },
-            { path: '/chat', labelKey: 'chat.title', icon: <MessageSquare size={20} /> },
+            { path: '/', labelKey: 'nav.dashboard', icon: <LayoutDashboard size={18} /> },
+            { path: '/calendar', labelKey: 'nav.calendar', icon: <Calendar size={18} /> },
+            { path: '/chat', labelKey: 'nav.aiAssistant', icon: <MessageCircle size={18} /> },
         ]
     },
     {
         titleKey: 'nav.documentProcessing',
         items: [
-            { path: '/receipt', labelKey: 'nav.documentReceipt', icon: <FileText size={20} /> },
-            { path: '/scan', labelKey: 'nav.scanning', icon: <Scan size={20} /> },
-            { path: '/verification', labelKey: 'nav.ocrVerification', icon: <CheckSquare size={20} />, badge: 3 },
-            { path: '/classification', labelKey: 'nav.classification', icon: <FolderTree size={20} /> },
+            { path: '/receipt', labelKey: 'nav.documentReceipt', icon: <FileText size={18} /> },
+            { path: '/scan', labelKey: 'nav.scanning', icon: <Scan size={18} /> },
+            { path: '/verification', labelKey: 'nav.ocrVerification', icon: <CheckSquare size={18} />, badge: 3 },
+            { path: '/classification', labelKey: 'nav.classification', icon: <FolderTree size={18} /> },
         ]
     },
     {
         titleKey: 'nav.monitoring',
         items: [
-            { path: '/tracking', labelKey: 'nav.documentTracking', icon: <Activity size={20} />, badge: 12 },
-            { path: '/workflow', labelKey: 'nav.workflow', icon: <Bell size={20} /> },
+            { path: '/tracking', labelKey: 'nav.documentTracking', icon: <Activity size={18} />, badge: 12 },
+            { path: '/workflow', labelKey: 'nav.workflow', icon: <Bell size={18} /> },
 
-            { path: '/archive', labelKey: 'nav.archive', icon: <Archive size={20} /> },
+            { path: '/archive', labelKey: 'nav.archive', icon: <Archive size={18} /> },
         ]
     },
     {
         titleKey: 'nav.administration',
         items: [
-            { path: '/users', labelKey: 'nav.userManagement', icon: <Users size={20} /> },
-            { path: '/reports', labelKey: 'nav.reports', icon: <BarChart3 size={20} /> },
-            { path: '/settings', labelKey: 'nav.settings', icon: <Settings size={20} /> },
+            { path: '/users', labelKey: 'nav.userManagement', icon: <Users size={18} /> },
+            { path: '/reports', labelKey: 'nav.reports', icon: <BarChart3 size={18} /> },
+            { path: '/settings', labelKey: 'nav.settings', icon: <Settings size={18} /> },
         ]
     }
 ];
