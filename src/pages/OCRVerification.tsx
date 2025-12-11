@@ -13,8 +13,7 @@ export const OCRVerification: React.FC = () => {
         sender: 'Ministry of Finance',
         dateOfLetter: '2024-11-28',
         title: 'Budget Proposal for Q1 2025',
-        description: 'Annual budget proposal for the first quarter of 2025 including detailed breakdown of departmental allocations and projected expenditures.',
-        ccList: 'Director General, Deputy Director, Finance Manager'
+        description: 'Annual budget proposal for the first quarter of 2025 including detailed breakdown of departmental allocations and projected expenditures.'
     });
 
     const confidence = {
@@ -128,23 +127,6 @@ export const OCRVerification: React.FC = () => {
                                 ) : (
                                     <p style={{ padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-lg)' }}>
                                         {ocrData.description}
-                                    </p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label style={{ fontWeight: 600, fontSize: 'var(--text-sm)', display: 'block', marginBottom: 'var(--spacing-sm)' }}>
-                                    {t('ocrVerification.ccList')}
-                                </label>
-                                {isEditing ? (
-                                    <Input
-                                        value={ocrData.ccList}
-                                        onChange={(e) => setOcrData({ ...ocrData, ccList: e.target.value })}
-                                        placeholder={t('ocrVerification.ccPlaceholder')}
-                                    />
-                                ) : (
-                                    <p style={{ padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-lg)' }}>
-                                        {ocrData.ccList}
                                     </p>
                                 )}
                             </div>

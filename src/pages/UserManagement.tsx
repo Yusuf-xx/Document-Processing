@@ -31,7 +31,7 @@ export const UserManagement: React.FC = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        role: 'Officer',
+        role: 'Executive',
         department: 'Finance',
         status: 'Active'
     });
@@ -57,7 +57,7 @@ export const UserManagement: React.FC = () => {
         setFormData({
             name: '',
             email: '',
-            role: 'Officer',
+            role: 'Executive',
             department: 'Finance',
             status: 'Active'
         });
@@ -95,18 +95,22 @@ export const UserManagement: React.FC = () => {
 
     const getRoleBadgeVariant = (role: string) => {
         switch (role) {
-            case 'Administrator': return 'danger';
-            case 'Officer': return 'info';
-            case 'Data Entry Clerk': return 'purple';
+            case 'C-Suite': return 'danger';
+            case 'Top Management': return 'warning';
+            case 'Executive': return 'info';
+            case 'Clerical': return 'purple';
+            case 'Others': return 'gray';
             default: return 'gray';
         }
     };
 
     const getRoleLabel = (role: string) => {
         const keyMap: Record<string, string> = {
-            'Administrator': 'admin',
-            'Officer': 'officer',
-            'Data Entry Clerk': 'clerk'
+            'C-Suite': 'cSuite',
+            'Top Management': 'topManagement',
+            'Executive': 'executive',
+            'Clerical': 'clerical',
+            'Others': 'others'
         };
         return t(`userManagement.roles.${keyMap[role] || role.toLowerCase()}`);
     };
@@ -258,9 +262,11 @@ export const UserManagement: React.FC = () => {
                             onChange={(e) => setFilterRole(e.target.value)}
                             options={[
                                 { value: 'all', label: t('userManagement.allRoles') },
-                                { value: 'Administrator', label: getRoleLabel('Administrator') },
-                                { value: 'Officer', label: getRoleLabel('Officer') },
-                                { value: 'Data Entry Clerk', label: getRoleLabel('Data Entry Clerk') }
+                                { value: 'C-Suite', label: getRoleLabel('C-Suite') },
+                                { value: 'Top Management', label: getRoleLabel('Top Management') },
+                                { value: 'Executive', label: getRoleLabel('Executive') },
+                                { value: 'Clerical', label: getRoleLabel('Clerical') },
+                                { value: 'Others', label: getRoleLabel('Others') }
                             ]}
                         />
 
@@ -454,9 +460,11 @@ export const UserManagement: React.FC = () => {
                                     value={formData.role}
                                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                     options={[
-                                        { value: 'Administrator', label: getRoleLabel('Administrator') },
-                                        { value: 'Officer', label: getRoleLabel('Officer') },
-                                        { value: 'Data Entry Clerk', label: getRoleLabel('Data Entry Clerk') }
+                                        { value: 'C-Suite', label: getRoleLabel('C-Suite') },
+                                        { value: 'Top Management', label: getRoleLabel('Top Management') },
+                                        { value: 'Executive', label: getRoleLabel('Executive') },
+                                        { value: 'Clerical', label: getRoleLabel('Clerical') },
+                                        { value: 'Others', label: getRoleLabel('Others') }
                                     ]}
                                 />
 

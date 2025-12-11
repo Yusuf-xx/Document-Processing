@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
-import { Textarea } from '../components/UI/Input';
+import { Textarea, Input, Select } from '../components/UI/Input';
 import { StatusBadge, SecurityBadge } from '../components/UI/Badge';
 import {
     FileText,
@@ -22,18 +22,19 @@ import { formatDateTime } from '../utils/helpers';
 export const DocumentWorkflow: React.FC = () => {
     const { t } = useTranslation();
     const [newComment, setNewComment] = useState('');
+    const [showReassignModal, setShowReassignModal] = useState(false);
 
     // Using first document as example
     const document = mockDocuments[0];
 
     const workflowStages = [
-        { id: 1, name: 'Received', status: 'completed', date: '2024-12-01 09:30', user: 'Ahmad bin Ali' },
-        { id: 2, name: 'Scanned', status: 'completed', date: '2024-12-01 09:35', user: 'System' },
-        { id: 3, name: 'OCR Verified', status: 'completed', date: '2024-12-01 10:15', user: 'Ahmad bin Ali' },
-        { id: 4, name: 'Classified', status: 'completed', date: '2024-12-01 11:00', user: 'Ahmad bin Ali' },
-        { id: 5, name: 'Under Review', status: 'current', date: '2024-12-01 14:30', user: 'Ahmad bin Ali' },
-        { id: 6, name: 'Approved', status: 'pending', date: null, user: null },
-        { id: 7, name: 'Archived', status: 'pending', date: null, user: null }
+        { id: 1, name: t('documentWorkflow.stages.received'), status: 'completed', date: '2024-12-01 09:30', user: 'Ahmad bin Ali' },
+        { id: 2, name: t('documentWorkflow.stages.scanned'), status: 'completed', date: '2024-12-01 09:35', user: 'System' },
+        { id: 3, name: t('documentWorkflow.stages.ocrVerified'), status: 'completed', date: '2024-12-01 10:15', user: 'Ahmad bin Ali' },
+        { id: 4, name: t('documentWorkflow.stages.classified'), status: 'completed', date: '2024-12-01 11:00', user: 'Ahmad bin Ali' },
+        { id: 5, name: t('documentWorkflow.stages.underReview'), status: 'current', date: '2024-12-01 14:30', user: 'Ahmad bin Ali' },
+        { id: 6, name: t('documentWorkflow.stages.approved'), status: 'pending', date: null, user: null },
+        { id: 7, name: t('documentWorkflow.stages.archived'), status: 'pending', date: null, user: null }
     ];
 
     const comments = [
@@ -71,8 +72,8 @@ export const DocumentWorkflow: React.FC = () => {
     };
 
     const getStageName = (name: string) => {
-        const key = name.replace(/\s+/g, '').replace(/^\w/, c => c.toLowerCase());
-        return t(`documentWorkflow.stages.${key}`);
+        // Stage name is already translated from workflowStages array
+        return name;
     };
 
     return (
@@ -383,17 +384,14 @@ export const DocumentWorkflow: React.FC = () => {
                         </CardHeader>
                         <CardBody>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
-                                <Button fullWidth icon={<CheckCircle size={18} />}>
+                                <Button fullWidth icon={<CheckCircle size={18} />} onClick={() => alert(t('documentWorkflow.statusUpdated'))}>
                                     {t('documentWorkflow.responded')}
                                 </Button>
-                                <Button variant="outline" fullWidth>
-                                    {t('documentWorkflow.takeAction')}
-                                </Button>
-                                <Button variant="outline" fullWidth>
-                                    {t('documentWorkflow.forward')}
-                                </Button>
-                                <Button variant="outline" fullWidth>
+                                <Button variant="outline" fullWidth onClick={() => setShowReassignModal(true)}>
                                     {t('documentWorkflow.reassign')}
+                                </Button>
+                                <Button variant="outline" fullWidth onClick={() => alert(t('documentWorkflow.documentClosed'))}>
+                                    {t('documentWorkflow.closed')}
                                 </Button>
                             </div>
                         </CardBody>
@@ -419,7 +417,7 @@ export const DocumentWorkflow: React.FC = () => {
                                 </div>
                                 <div>
                                     <p style={{ color: 'var(--color-gray-600)', margin: 0, marginBottom: 'var(--spacing-xs)' }}>
-                                        {t('documentWorkflow.ccList')}
+                                        {t('documentWorkflow.circulationList')}
                                     </p>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xs)' }}>
                                         {document.ccList.map((cc, index) => (
@@ -448,6 +446,53 @@ export const DocumentWorkflow: React.FC = () => {
                     </Card>
                 </div>
             </div>
+
+            {/* Reassign Modal */}
+            {showReassignModal && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000
+                }}>
+                    <Card style={{ width: '500px', maxWidth: '90vw' }}>
+                        <CardHeader>
+                            <h3 style={{ margin: 0 }}>{t('documentWorkflow.reassignDocument')}</h3>
+                        </CardHeader>
+                        <CardBody>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+                                <Input
+                                    label={t('documentClassification.department')}
+                                    value={document.department}
+                                    disabled
+                                    helperText={t('documentWorkflow.departmentReadOnly')}
+                                />
+                                <Select
+                                    label={t('documentClassification.assignedTo')}
+                                    options={[
+                                        { value: 'Ahmad bin Ali', label: 'Ahmad bin Ali - Chief Financial Officer' },
+                                        { value: 'Other Officer', label: 'Other Officer - Senior Accountant' }
+                                    ]}
+                                />
+                                <div style={{ display: 'flex', gap: 'var(--spacing-md)', marginTop: 'var(--spacing-md)' }}>
+                                    <Button fullWidth onClick={() => { alert(t('documentWorkflow.reassignSuccess')); setShowReassignModal(false); }}>
+                                        {t('documentWorkflow.confirmReassign')}
+                                    </Button>
+                                    <Button variant="outline" fullWidth onClick={() => setShowReassignModal(false)}>
+                                        {t('common.cancel')}
+                                    </Button>
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </div>
+            )}
         </div>
     );
 };

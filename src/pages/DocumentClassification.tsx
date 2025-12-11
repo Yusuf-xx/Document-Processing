@@ -4,32 +4,76 @@ import { Card, CardHeader, CardBody } from '../components/UI/Card';
 import { Button } from '../components/UI/Button';
 import { Select, Input } from '../components/UI/Input';
 import { Badge } from '../components/UI/Badge';
-import { Send, UserPlus } from 'lucide-react';
-import { departments, classifications } from '../data/mockData';
+import { Send } from 'lucide-react';
+import { departments, classifications, departmentHeads, mockUsers } from '../data/mockData';
 
 export const DocumentClassification: React.FC = () => {
     const { t } = useTranslation();
     const [formData, setFormData] = useState({
-        classification: 'Confidential',
+        classification: 'Restricted',
         department: 'Finance',
         assignedTo: '',
+        assignedEmail: '',
+        assignedDesignation: '',
         routing: 'direct',
         ccList: [] as string[],
         priority: 'High',
-        dueDate: ''
+        dueDate: '',
+        documentTitle: 'Budget Proposal for Q1 2025',
+        referenceNumber: 'DOC-2025-001'
     });
 
-    const [newCC, setNewCC] = useState('');
+    // Auto-calculate due date based on priority
+    const calculateDueDate = (priority: string) => {
+        const today = new Date();
+        let daysToAdd = 0;
 
-    const addCC = () => {
-        if (newCC && !formData.ccList.includes(newCC)) {
-            setFormData({ ...formData, ccList: [...formData.ccList, newCC] });
-            setNewCC('');
+        switch (priority) {
+            case 'Urgent':
+                daysToAdd = 1; // 24 hours
+                break;
+            case 'High':
+                daysToAdd = 2; // 48 hours
+                break;
+            case 'Medium':
+                daysToAdd = 3; // 3 days
+                break;
+            case 'Low':
+                daysToAdd = 5; // 5 days
+                break;
+            default:
+                daysToAdd = 3;
         }
+
+        const dueDate = new Date(today);
+        dueDate.setDate(today.getDate() + daysToAdd);
+        return dueDate.toISOString().split('T')[0];
     };
 
+    // Handle priority change and auto-update due date
+    const handlePriorityChange = (priority: string) => {
+        const newDueDate = calculateDueDate(priority);
+        setFormData({ ...formData, priority, dueDate: newDueDate });
+    };
+
+    // Remove officer from circulation list
     const removeCC = (cc: string) => {
         setFormData({ ...formData, ccList: formData.ccList.filter(c => c !== cc) });
+    };
+
+    const handleDepartmentChange = (dept: string) => {
+        const head = departmentHeads[dept];
+        if (head) {
+            setFormData({
+                ...formData,
+                department: dept,
+                assignedTo: head.name,
+                assignedEmail: head.email,
+                assignedDesignation: head.designation
+            });
+        } else {
+            setFormData({ ...formData, department: dept });
+        }
     };
 
     const getClassificationLabel = (c: string) => {
@@ -57,9 +101,19 @@ export const DocumentClassification: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--spacing-xl)' }}>
                 <Card>
                     <CardHeader>
-                        <h3 style={{ margin: 0 }}>{t('documentClassification.details')}</h3>
+                        <h3 style={{ margin: 0 }}>{t('documentClassification.documentReference')}</h3>
                     </CardHeader>
                     <CardBody>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-lg)', padding: 'var(--spacing-md)', background: 'var(--color-gray-50)', borderRadius: 'var(--radius-lg)' }}>
+                            <div>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentClassification.titleSubject')}:</span>
+                                <p style={{ margin: 0, marginTop: 'var(--spacing-xs)', fontWeight: 600 }}>{formData.documentTitle}</p>
+                            </div>
+                            <div>
+                                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)' }}>{t('documentReceipt.refNumber')}:</span>
+                                <p style={{ margin: 0, marginTop: 'var(--spacing-xs)', fontWeight: 600 }}>{formData.referenceNumber}</p>
+                            </div>
+                        </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
                             <Select
                                 label={t('documentClassification.securityClass')}
@@ -72,20 +126,32 @@ export const DocumentClassification: React.FC = () => {
                             <Select
                                 label={t('documentClassification.department')}
                                 value={formData.department}
-                                onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                                onChange={(e) => handleDepartmentChange(e.target.value)}
                                 options={departments.map(d => ({ value: d, label: getDepartmentLabel(d) }))}
                             />
 
                             <Input
+                                label={t('documentClassification.assignedDesignation')}
+                                value={formData.assignedDesignation}
+                                disabled
+                                helperText={t('documentClassification.autoAssigned')}
+                            />
+
+                            <Input
                                 label={t('documentClassification.assignedTo')}
-                                placeholder={t('documentClassification.assignedPlaceholder')}
                                 value={formData.assignedTo}
-                                onChange={(e) => setFormData({ ...formData, assignedTo: e.target.value })}
+                                disabled
+                            />
+
+                            <Input
+                                label={t('documentClassification.assignedEmail')}
+                                value={formData.assignedEmail}
+                                disabled
                             />
 
                             <div>
                                 <label style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                                    {t('documentClassification.routing')}
+                                    {t('documentClassification.additionalRouting')}
                                 </label>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
                                     <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', cursor: 'pointer' }}>
@@ -106,57 +172,75 @@ export const DocumentClassification: React.FC = () => {
                                             checked={formData.routing === 'direct'}
                                             onChange={(e) => setFormData({ ...formData, routing: e.target.value })}
                                         />
-                                        <span>{t('documentClassification.routeDirect')}</span>
+                                        <span>{t('documentClassification.routeFollowing')}</span>
                                     </label>
                                 </div>
                             </div>
 
-                            <div>
-                                <label style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                                    {t('documentClassification.ccList')}
-                                </label>
-                                <div style={{ display: 'flex', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
-                                    <Input
-                                        placeholder={t('documentClassification.ccPlaceholder')}
-                                        value={newCC}
-                                        onChange={(e) => setNewCC(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && addCC()}
-                                    />
-                                    <Button onClick={addCC} icon={<UserPlus size={18} />}>
-                                        {t('documentClassification.add')}
-                                    </Button>
+                            {formData.routing === 'direct' && (
+                                <div>
+                                    <label style={{ display: 'block', marginBottom: 'var(--spacing-sm)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>
+                                        {t('documentClassification.circulationList')}
+                                    </label>
+                                    <div style={{ marginBottom: 'var(--spacing-md)' }}>
+                                        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-gray-600)', marginBottom: 'var(--spacing-sm)' }}>
+                                            {t('documentClassification.selectOfficers')}
+                                        </p>
+                                        {mockUsers.filter(u => u.department === formData.department).map(user => (
+                                            <label key={user.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)', padding: 'var(--spacing-sm)', cursor: 'pointer', borderRadius: 'var(--radius-md)', marginBottom: 'var(--spacing-xs)' }}>
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            if (!formData.ccList.includes(user.name)) {
+                                                                setFormData({ ...formData, ccList: [...formData.ccList, user.name] });
+                                                            }
+                                                        } else {
+                                                            setFormData({ ...formData, ccList: formData.ccList.filter(n => n !== user.name) });
+                                                        }
+                                                    }}
+                                                    checked={formData.ccList.includes(user.name)}
+                                                />
+                                                <div>
+                                                    <div style={{ fontWeight: 500 }}>{user.name}</div>
+                                                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-gray-500)' }}>{user.email}</div>
+                                                </div>
+                                            </label>
+                                        ))}
+                                    </div>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)' }}>
+                                        {formData.ccList.map((cc, index) => (
+                                            <Badge key={index} variant="info">
+                                                {cc}
+                                                <button
+                                                    onClick={() => removeCC(cc)}
+                                                    style={{
+                                                        marginLeft: 'var(--spacing-sm)',
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        color: 'inherit',
+                                                        fontWeight: 'bold'
+                                                    }}
+                                                >
+                                                    ×
+                                                </button>
+                                            </Badge>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--spacing-sm)' }}>
-                                    {formData.ccList.map((cc, index) => (
-                                        <Badge key={index} variant="info">
-                                            {cc}
-                                            <button
-                                                onClick={() => removeCC(cc)}
-                                                style={{
-                                                    marginLeft: 'var(--spacing-sm)',
-                                                    background: 'none',
-                                                    border: 'none',
-                                                    cursor: 'pointer',
-                                                    color: 'inherit',
-                                                    fontWeight: 'bold'
-                                                }}
-                                            >
-                                                ×
-                                            </button>
-                                        </Badge>
-                                    ))}
-                                </div>
-                            </div>
+                            )}
+
 
                             <Select
                                 label={t('documentClassification.priority')}
                                 value={formData.priority}
-                                onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+                                onChange={(e) => handlePriorityChange(e.target.value)}
                                 options={[
                                     { value: 'Low', label: getPriorityLabel('Low') },
                                     { value: 'Medium', label: getPriorityLabel('Medium') },
                                     { value: 'High', label: getPriorityLabel('High') },
-                                    { value: 'Critical', label: getPriorityLabel('Critical') }
+                                    { value: 'Urgent', label: getPriorityLabel('Urgent') }
                                 ]}
                             />
 
@@ -188,39 +272,27 @@ export const DocumentClassification: React.FC = () => {
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                                 <div>
-                                    <Badge variant="danger" size="sm">{t('classification.topSecret')}</Badge>
+                                    <Badge variant="info" size="sm">{t('classification.information')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        {t('documentClassification.topSecretDesc')}
+                                        {t('documentClassification.informationDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="danger" size="sm">{t('classification.secret')}</Badge>
+                                    <Badge variant="gray" size="sm">{t('classification.operational')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        {t('documentClassification.secretDesc')}
+                                        {t('documentClassification.operationalDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="warning" size="sm">{t('classification.confidential')}</Badge>
-                                    <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        {t('documentClassification.confidentialDesc')}
-                                    </p>
-                                </div>
-                                <div>
-                                    <Badge variant="info" size="sm">{t('classification.restricted')}</Badge>
+                                    <Badge variant="warning" size="sm">{t('classification.restricted')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
                                         {t('documentClassification.restrictedDesc')}
                                     </p>
                                 </div>
                                 <div>
-                                    <Badge variant="gray" size="sm">{t('classification.internalUse')}</Badge>
+                                    <Badge variant="danger" size="sm">{t('classification.classified')}</Badge>
                                     <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        {t('documentClassification.internalUseDesc')}
-                                    </p>
-                                </div>
-                                <div>
-                                    <Badge variant="success" size="sm">{t('classification.open')}</Badge>
-                                    <p style={{ marginTop: 'var(--spacing-xs)', color: 'var(--color-gray-600)' }}>
-                                        {t('documentClassification.openDesc')}
+                                        {t('documentClassification.classifiedDesc')}
                                     </p>
                                 </div>
                             </div>
@@ -229,29 +301,25 @@ export const DocumentClassification: React.FC = () => {
 
                     <Card style={{ marginTop: 'var(--spacing-lg)' }}>
                         <CardHeader>
-                            <h3 style={{ margin: 0 }}>{t('documentClassification.sla')}</h3>
+                            <h3 style={{ margin: 0 }}>{t('documentClassification.priorityTimeline')}</h3>
                         </CardHeader>
                         <CardBody>
                             <div style={{ fontSize: 'var(--text-sm)', display: 'flex', flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>{t('classification.topSecret')}:</span>
+                                    <span>{t('documentClassification.priorities.urgent')}:</span>
                                     <strong>24 {t('common.hours')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>{t('classification.secret')}:</span>
+                                    <span>{t('documentClassification.priorities.high')}:</span>
                                     <strong>48 {t('common.hours')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>{t('classification.confidential')}:</span>
+                                    <span>{t('documentClassification.priorities.medium')}:</span>
                                     <strong>3 {t('common.days')}</strong>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>{t('classification.restricted')}:</span>
+                                    <span>{t('documentClassification.priorities.low')}:</span>
                                     <strong>5 {t('common.days')}</strong>
-                                </div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <span>{t('classification.internalUse')}/{t('classification.open')}:</span>
-                                    <strong>7 {t('common.days')}</strong>
                                 </div>
                             </div>
                         </CardBody>

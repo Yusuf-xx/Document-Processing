@@ -44,7 +44,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-01',
         dateOfLetter: '2025-11-28',
         status: 'Pending Verification',
-        classification: 'Confidential',
+        classification: 'Restricted',
         department: 'Finance',
         assignedTo: 'Ahmad bin Ali',
         dueDate: '2025-12-08', // Due Today
@@ -60,7 +60,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-02',
         dateOfLetter: '2025-12-01',
         status: 'In Progress',
-        classification: 'Internal Use',
+        classification: 'Operational',
         department: 'HR',
         assignedTo: 'Siti Nurhaliza',
         dueDate: '2025-12-09', // Due Tomorrow
@@ -76,11 +76,11 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-11-25',
         dateOfLetter: '2025-11-24',
         status: 'Overdue',
-        classification: 'Secret',
+        classification: 'Classified',
         department: 'Security',
         assignedTo: 'Mohd Razak',
         dueDate: '2025-12-01', // Overdue
-        priority: 'Critical',
+        priority: 'Urgent',
         description: 'Updated security protocols for handling classified documents.',
         ccList: ['Security Team']
     },
@@ -108,7 +108,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-05',
         dateOfLetter: '2025-12-04',
         status: 'Closed',
-        classification: 'Open',
+        classification: 'Information',
         department: 'Administration',
         assignedTo: 'Fatimah Abdullah',
         dueDate: '2025-12-20', // Future
@@ -124,7 +124,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-01',
         dateOfLetter: '2025-11-30',
         status: 'Received',
-        classification: 'Internal Use',
+        classification: 'Operational',
         department: 'IT',
         assignedTo: 'Tan Bee Leng',
         dueDate: '2025-12-10',
@@ -156,7 +156,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-06',
         dateOfLetter: '2025-12-06',
         status: 'OCR Verified',
-        classification: 'Open',
+        classification: 'Information',
         department: 'Public Relations',
         assignedTo: 'Sarah Lee',
         dueDate: '2025-12-08', // Due Today
@@ -172,11 +172,11 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-12-07',
         dateOfLetter: '2025-12-05',
         status: 'Classified',
-        classification: 'Top Secret',
+        classification: 'Classified',
         department: 'Finance',
         assignedTo: 'Ahmad bin Ali',
         dueDate: '2025-12-12',
-        priority: 'Critical',
+        priority: 'Urgent',
         description: 'Preliminary findings from the Q3 financial audit.',
         ccList: ['Minister']
     },
@@ -188,7 +188,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-10-01',
         dateOfLetter: '2025-09-28',
         status: 'Approved',
-        classification: 'Internal Use',
+        classification: 'Operational',
         department: 'HR',
         assignedTo: 'Siti Nurhaliza',
         dueDate: '2025-10-15', // Completed past
@@ -204,7 +204,7 @@ export const mockDocuments: Document[] = [
         dateReceived: '2025-11-01',
         dateOfLetter: '2025-10-25',
         status: 'Archived',
-        classification: 'Confidential',
+        classification: 'Restricted',
         department: 'Development',
         assignedTo: 'System',
         dueDate: '2025-11-10',
@@ -219,7 +219,7 @@ export const mockUsers: User[] = [
         id: '1',
         name: 'Ahmad bin Ali',
         email: 'ahmad.ali@gov.my',
-        role: 'Administrator',
+        role: 'C-Suite',
         department: 'Finance',
         status: 'Active'
     },
@@ -227,7 +227,7 @@ export const mockUsers: User[] = [
         id: '2',
         name: 'Siti Nurhaliza',
         email: 'siti.nurhaliza@gov.my',
-        role: 'Officer',
+        role: 'Top Management',
         department: 'HR',
         status: 'Active'
     },
@@ -235,7 +235,7 @@ export const mockUsers: User[] = [
         id: '3',
         name: 'Mohd Razak',
         email: 'mohd.razak@gov.my',
-        role: 'Officer',
+        role: 'Executive',
         department: 'Security',
         status: 'Active'
     },
@@ -243,7 +243,7 @@ export const mockUsers: User[] = [
         id: '4',
         name: 'Lee Wei Ming',
         email: 'lee.weiming@gov.my',
-        role: 'Officer',
+        role: 'Executive',
         department: 'Development',
         status: 'Active'
     },
@@ -251,11 +251,23 @@ export const mockUsers: User[] = [
         id: '5',
         name: 'Fatimah Abdullah',
         email: 'fatimah.abdullah@gov.my',
-        role: 'Data Entry Clerk',
+        role: 'Clerical',
         department: 'Administration',
         status: 'Active'
     }
 ];
+
+// Department head mapping for auto-assignment
+export const departmentHeads: Record<string, { designation: string; name: string; email: string }> = {
+    'Finance': { designation: 'Chief Financial Officer', name: 'Ahmad bin Ali', email: 'ahmad.ali@gov.my' },
+    'HR': { designation: 'HR Director', name: 'Siti Nurhaliza', email: 'siti.nurhaliza@gov.my' },
+    'Security': { designation: 'Security Chief', name: 'Mohd Razak', email: 'mohd.razak@gov.my' },
+    'Development': { designation: 'Development Manager', name: 'Lee Wei Ming', email: 'lee.weiming@gov.my' },
+    'Administration': { designation: 'Administrative Officer', name: 'Fatimah Abdullah', email: 'fatimah.abdullah@gov.my' },
+    'IT': { designation: 'IT Manager', name: 'Tan Bee Leng', email: 'tan.beeleng@gov.my' },
+    'Legal': { designation: 'Legal Counsel', name: 'Raj Kumar', email: 'raj.kumar@gov.my' },
+    'Operations': { designation: 'Operations Manager', name: 'Sarah Lee', email: 'sarah.lee@gov.my' }
+};
 
 export const mockActivities: Activity[] = [
     {
@@ -312,12 +324,10 @@ export const departments = [
 ];
 
 export const classifications = [
-    'Open',
-    'Internal Use',
+    'Information',
+    'Operational',
     'Restricted',
-    'Confidential',
-    'Secret',
-    'Top Secret'
+    'Classified'
 ];
 
 export const statuses = [

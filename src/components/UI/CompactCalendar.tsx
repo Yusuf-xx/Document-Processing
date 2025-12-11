@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardBody } from './Card';
 import { Button } from './Button';
 import { StatusBadge } from './Badge';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import './CompactCalendar.css';
 
 export const CompactCalendar: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -111,14 +113,14 @@ export const CompactCalendar: React.FC = () => {
                         <div className="tasks-header">
                             <div className="tasks-title">
                                 <h3>
-                                    Tasks for {selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
+                                    {t('calendar.tasksFor', { date: selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }) })}
                                 </h3>
                                 <p>
-                                    {selectedDateDocs.length} documents due today
+                                    {t('calendar.documentsCount', { count: selectedDateDocs.length })}
                                 </p>
                             </div>
                             <Button variant="outline" size="sm" onClick={() => navigate('/calendar')}>
-                                Open Calendar
+                                {t('calendar.openCalendar')}
                             </Button>
                         </div>
 
