@@ -15,7 +15,7 @@
         "classification": "Klasifikasi",
         "monitoring": "Pemantauan",
         "documentTracking": "Penjejakan Dokumen",
-        "workflow": "Alur Kerja",
+        "workflow": "Aliran Kerja",
         "archive": "Arkib",
         "administration": "Pentadbiran",
         "userManagement": "Pengurusan Pengguna",
@@ -23,7 +23,7 @@
         "settings": "Tetapan"
     },
     "header": {
-        "search": "Cari dokumen...",
+        "search": "Cari Dokumen...",
         "quickActions": "Tindakan Pantas",
         "viewProfile": "Lihat Profil",
         "logout": "Log Keluar",
@@ -38,7 +38,7 @@
         "save": "Simpan",
         "cancel": "Batal",
         "delete": "Padam",
-        "edit": "Edit",
+        "edit": "Sunting",
         "view": "Lihat",
         "submit": "Hantar",
         "approve": "Luluskan",
@@ -47,20 +47,20 @@
         "user": "Pengguna",
         "role": "Peranan",
         "administrator": "Pentadbir",
-        "hours": "jam",
-        "days": "hari"
+        "hours": "Jam",
+        "days": "Hari"
     },
     "dashboard": {
         "title": "Papan Pemuka",
-        "description": "Selamat kembali! Berikut adalah gambaran keseluruhan sistem pengurusan dokumen anda.",
+        "description": "Selamat kembali! Berikut adalah gambaran keseluruhan status pengurusan dokumen anda.",
         "viewAllDocuments": "Lihat Semua Dokumen",
         "newDocument": "Dokumen Baharu",
         "stats": {
             "totalDocuments": "Jumlah Dokumen",
             "pendingReview": "Menunggu Semakan",
             "completed": "Selesai",
-            "slaBreaches": "Pelanggaran SLA",
-            "fromLastMonth": "dari bulan lepas"
+            "slaBreaches": "Ketidakpatuhan SLA",
+            "fromLastMonth": "Dari Bulan Lepas"
         },
         "recentDocuments": "Dokumen Terkini",
         "viewAll": "Lihat Semua",
@@ -86,7 +86,7 @@
         "assigned": "Ditugaskan",
         "received": "Diterima",
         "pendingScan": "Menunggu Imbasan",
-        "scanned": "Diimbas",
+        "scanned": "Sudah Diimbas",
         "pendingOcr": "Menunggu OCR",
         "pendingVerification": "Menunggu Pengesahan",
         "pendingClassification": "Menunggu Klasifikasi",
@@ -94,11 +94,11 @@
         "ocrVerified": "Disahkan OCR"
     },
     "classification": {
-        "information": "Maklumat",
+        "information": "Maklumat Umum",
         "operational": "Operasi",
         "restricted": "Terhad",
-        "classified": "Terperingkat",
-        "topSecret": "Rahsia Besar",
+        "classified": "Dokumen Sulit",
+        "topSecret": "Rahsia Tahap Tinggi",
         "secret": "Rahsia",
         "confidential": "Sulit",
         "internalUse": "Kegunaan Dalaman",
@@ -117,23 +117,23 @@
     "activity": {
         "receive": "Dokumen Diterima",
         "ocrProcessing": "Pemprosesan OCR",
-        "assign": "Dokumen Ditugaskan",
-        "approve": "Dokumen Diluluskan",
-        "close": "Dokumen Ditutup",
+        "assign": "Serah Tugas",
+        "approve": "Diluluskan",
+        "close": "Ditutup",
         "details": {
-            "received": "Dokumen diterima dan didaftarkan dalam sistem",
-            "ocr": "Pengekstrakan teks automatik selesai dengan keyakinan 98%",
-            "assigned": "Dokumen ditugaskan ke bahagian HR untuk semakan",
+            "received": "Dokumen diterima dan berjaya didaftarkan",
+            "ocr": "Pengekstrakan teks automatik selesai. Tahap Keyakinan: 98%",
+            "assigned": "Dokumen diserahkan ke Bahagian Sumber Manusia untuk semakan",
             "approved": "Kemas kini protokol keselamatan diluluskan dan dimajukan untuk pelaksanaan",
-            "archived": "Laporan tahunan disemak dan diarkibkan"
+            "archived": "Diarkibkan"
         }
     },
     "login": {
         "systemName": "Sistem IDCM",
         "systemSubtitle": "Penangkapan & Pemantauan Dokumen Pintar",
-        "govName": "Kerajaan Malaysia",
+        "govName": "Kerajaan Negeri Sabah",
         "welcome": "Selamat Kembali",
-        "subtitle": "Log masuk untuk mengakses sistem pengurusan dokumen",
+        "subtitle": "Log masuk untuk mengakses Sistem IDCM",
         "emailLabel": "Alamat E-mel",
         "emailPlaceholder": "e-mel.anda@gov.my",
         "passwordLabel": "Kata Laluan",
@@ -141,34 +141,34 @@
         "rememberMe": "Ingat saya",
         "forgotPassword": "Lupa kata laluan?",
         "signIn": "Log Masuk",
-        "footerOfficial": "Untuk kegunaan rasmi kerajaan sahaja",
-        "footerCopyright": "© 2024 Kerajaan Malaysia. Hak cipta terpelihara."
+        "footerOfficial": "Untuk kegunaan rasmi SAFODA sahaja",
+        "footerCopyright": "© 2026 SAFODA. Hak cipta terpelihara."
     },
     "documentReceipt": {
         "title": "Penerimaan & Pendaftaran Dokumen",
         "description": "Daftarkan dokumen masuk baharu ke dalam sistem",
         "documentInfo": "Maklumat Dokumen",
         "refNumber": "Nombor Rujukan",
-        "refNumberHelper": "Nombor rujukan yang dijana secara automatik",
+        "refNumberHelper": "Nombor Rujukan yang dijana secara automatik",
         "dateReceived": "Tarikh Diterima",
         "sender": "Pengirim / Agensi Asal",
         "senderPlaceholder": "Masukkan nama pengirim atau agensi",
         "dateOfLetter": "Tarikh Surat/Dokumen",
         "notes": "Nota Awal",
         "notesPlaceholder": "Sebarang pemerhatian awal atau nota...",
-        "uploadEnvelope": "Muat Naik Imej Sampul (Pilihan)",
+        "uploadEnvelope": "Muat Naik Imej Sampul (Tidak Wajib)",
         "uploadText": "Klik untuk memuat naik atau tarik dan lepas",
         "uploadHint": "PNG, JPG sehingga 10MB",
         "register": "Daftar Dokumen",
         "qrCode": "Kod QR",
-        "scanQr": "Imbas kod QR ini untuk penjejakan dokumen pantas",
+        "scanQr": "Imbas kod QR ini untuk penjejakan dokumen",
         "printQr": "Cetak Kod QR",
         "nextSteps": "Langkah Seterusnya",
         "steps": {
             "register": "Daftar butiran dokumen",
-            "scan": "Teruskan ke pengimbasan",
+            "scan": "Teruskan ke Pengimbasan",
             "ocr": "Pengesahan OCR",
-            "classification": "Klasifikasi & penugasan"
+            "classification": "Klasifikasi & Penugasan"
         }
     },
     "documentScan": {
@@ -178,7 +178,7 @@
         "scanHeader": "Imbas Dokumen",
         "ready": "Sedia untuk Imbas",
         "readyDesc": "Letakkan dokumen pada pengimbas atau muat naik fail digital",
-        "start": "Mula Mengimbas",
+        "start": "Mula Imbas",
         "upload": "Muat Naik Fail",
         "scanning": "Sedang Mengimbas...",
         "scanningDesc": "Sila tunggu sementara kami mendigitalkan dokumen anda",
@@ -190,20 +190,20 @@
         "resolution": "Resolusi",
         "clarity": "Kejelasan",
         "orientation": "Orientasi",
-        "preview": "Pratonton",
-        "previewDoc": "Pratonton Dokumen Diimbas",
-        "noDoc": "Tiada dokumen diimbas lagi",
+        "preview": "Semak",
+        "previewDoc": "Semak Dokumen Diimbas",
+        "noDoc": "Tiada dokumen untuk diimbas lagi",
         "rotate": "Putar",
-        "crop": "Potong",
-        "enhance": "Tingkatkan"
+        "crop": "Pangkas",
+        "enhance": "Serlahkan"
     },
     "ocrVerification": {
         "title": "Pengesahan OCR",
-        "description": "Semak dan sahkan maklumat dokumen yang diekstrak secara automatik",
+        "description": "Semak dan sahkan maklumat dokumen yang diekstrak",
         "confidence": "Keyakinan",
         "extractedInfo": "Maklumat Diekstrak",
         "save": "Simpan",
-        "edit": "Edit",
+        "edit": "Sunting",
         "sender": "Pengirim",
         "dateOfLetter": "Tarikh Surat",
         "subject": "Tajuk/Perkara",
@@ -212,7 +212,7 @@
         "ccPlaceholder": "Senarai dipisahkan dengan koma",
         "approve": "Luluskan & Teruskan",
         "rescan": "Imbas Semula Dokumen",
-        "preview": "Pratonton Dokumen",
+        "preview": "Semak Dokumen",
         "processingDetails": "Butiran Pemprosesan OCR",
         "language": "Bahasa: Bahasa Melayu & Inggeris",
         "processingTime": "Masa Pemprosesan",
@@ -226,12 +226,12 @@
         "titleSubject": "Tajuk/Perkara",
         "details": "Butiran Klasifikasi",
         "securityClass": "Klasifikasi Keselamatan",
-        "securityClassHelper": "Klasifikasi menentukan kawalan akses dan garis masa keutamaan",
+        "securityClassHelper": "Klasifikasi menentukan kawalan dan garis masa akses",
         "department": "Jabatan",
         "assignedTo": "Ditugaskan Kepada",
         "assignedDesignation": "Jawatan Pegawai",
         "assignedEmail": "E-mel Pegawai",
-        "autoAssigned": "Ditugaskan secara automatik berdasarkan jabatan",
+        "autoAssigned": "Ditugaskan secara automatik berdasarkan Jabatan",
         "assignedPlaceholder": "Pilih nama pegawai",
         "routing": "Pilihan Penghalaan",
         "additionalRouting": "Penghalaan Tambahan",
@@ -252,15 +252,15 @@
         "guide": "Panduan Klasifikasi",
         "sla": "Garis Masa SLA",
         "priorityTimeline": "Garis Masa Keutamaan",
-        "informationDesc": "Maklumat awam, sekatan minimum.",
-        "operationalDesc": "Untuk kegunaan operasi dalaman sahaja.",
-        "restrictedDesc": "Pengedaran terhad dalam kakitangan yang dibenarkan sahaja.",
-        "classifiedDesc": "Klasifikasi tertinggi. Pendedahan tanpa kebenaran boleh menyebabkan kerosakan yang sangat serius.",
-        "topSecretDesc": "Klasifikasi tertinggi. Pendedahan tanpa kebenaran boleh menyebabkan kerosakan yang sangat serius.",
-        "secretDesc": "Pendedahan tanpa kebenaran boleh menyebabkan kerosakan serius kepada keselamatan negara.",
-        "confidentialDesc": "Pendedahan tanpa kebenaran boleh menyebabkan kerosakan kepada kepentingan kerajaan.",
-        "internalUseDesc": "Untuk kegunaan kerajaan dalaman sahaja.",
-        "openDesc": "Maklumat awam, tiada sekatan.",
+        "informationDesc": "Maklumat Umum, Sekatan Minimum.",
+        "operationalDesc": "Untuk Kegunaan Operasi Umum.",
+        "restrictedDesc": "Pengedaran Terhad. Hanya kakitangan berkaitan sahaja.",
+        "classifiedDesc": "Klasifikasi Tertinggi. Pendedahan Tanpa Kebenaran Adalah Suatu Kesalahan dan Akan Dikenakan Tindakan Tatatertib.",
+        "topSecretDesc": "Klasifikasi Tertinggi. Pendedahan Tanpa Kebenaran Adalah Suatu Kesalahan dan Akan Dikenakan Tindakan Tatatertib.",
+        "secretDesc": "Pendedahan Tanpa Kebenaran Adalah Suatu Kesalahan dan Akan Dikenakan Tindakan Tatatertib.",
+        "confidentialDesc": "Pendedahan Tanpa Kebenaran Adalah Suatu Kesalahan dan Akan Dikenakan Tindakan Tatatertib.",
+        "internalUseDesc": "Untuk Kegunaan Dalaman.",
+        "openDesc": "Maklumat Umum, Tiada Sekatan.",
         "priorities": {
             "low": "Rendah",
             "medium": "Sederhana",
@@ -271,8 +271,8 @@
     },
     "documentTracking": {
         "title": "Penjejakan Dokumen",
-        "description": "Pantau dan jejaki semua dokumen dalam sistem",
-        "export": "Eksport Laporan",
+        "description": "Pantau dan Jejaki Semua Dokumen dalam Sistem",
+        "export": "Hantar Laporan",
         "allDocuments": "Semua Dokumen",
         "filterStatus": "Tapis Status",
         "filterDept": "Tapis Jabatan",
@@ -290,41 +290,41 @@
         "onTrack": "Mengikut Jadual",
         "dueSoon": "Hampir Tamat",
         "overdue": "Lewat",
-        "daysOverdue": "{{count}} hari lewat",
-        "daysLeft": "{{count}} hari lagi"
+        "daysOverdue": "Lewat {{count}} Hari",
+        "daysLeft": "{{count}} Hari Lagi"
     },
     "documentWorkflow": {
-        "title": "Aliran Kerja Dokumen",
-        "description": "Jejaki kemajuan dokumen dan bekerjasama dengan ahli pasukan",
+        "title": "Aliran Dokumen",
+        "description": "Jejaki Kemajuan Dokumen dan Tahap Kerjasama antara Kakitangan",
         "share": "Kongsi",
         "download": "Muat Turun",
-        "comments": "Komen & Perbincangan",
-        "addComment": "Tambah komen atau nota...",
+        "comments": "Komen & Maklum Balas",
+        "addComment": "Tambah Komen atau Nota...",
         "postComment": "Hantar Komen",
         "cancel": "Batal",
         "commentAdded": "Komen berjaya ditambah!",
         "approvedTag": "Diluluskan",
         "queryTag": "Pertanyaan",
-        "workflowProgress": "Kemajuan Aliran Kerja",
-        "inProgress": "Sedang Berjalan",
+        "workflowProgress": "Kemajuan Aliran Dokumen",
+        "inProgress": "Dalam Proses",
         "quickActions": "Tindakan Pantas",
-        "responded": "Telah Direspon",
+        "responded": "Telah Dibalas",
         "takeAction": "Ambil Tindakan",
-        "forward": "Majukan ke Jabatan",
+        "forward": "Majukan Kepada",
         "reassign": "Tugaskan Semula",
         "closed": "Ditutup",
-        "reassignDocument": "Tugaskan Semula Dokumen",
+        "reassignDocument": "Serah Tugas Semula",
         "departmentReadOnly": "Jabatan tidak boleh diubah",
         "confirmReassign": "Sahkan Penugasan Semula",
-        "reassignSuccess": "Dokumen berjaya ditugaskan semula!",
-        "statusUpdated": "Status dokumen dikemas kini kepada Diluluskan!",
-        "documentClosed": "Dokumen telah ditutup!",
+        "reassignSuccess": "Dokumen berjaya diserah tugas semula!",
+        "statusUpdated": "Status Dokumen dikemaskini kepada Diluluskan!",
+        "documentClosed": "Status Dokumen dikemaskini kepada Ditutup!",
         "documentDetails": "Butiran Dokumen",
         "priority": "Keutamaan",
         "dateOfLetter": "Tarikh Surat",
         "ccList": "Senarai Salinan (SK)",
         "circulationList": "Senarai Edaran",
-        "detailsDesc": "Penerangan",
+        "detailsDesc": "Butiran",
         "sender": "Pengirim",
         "received": "Diterima",
         "stages": {
@@ -339,7 +339,7 @@
     },
     "archive": {
         "title": "Arkib Dokumen",
-        "description": "Cari dan dapatkan semula dokumen arkib",
+        "description": "Carian Dokumen Arkib",
         "export": "Eksport Senarai Arkib",
         "totalArchived": "Jumlah Diarkibkan",
         "thisYear": "Tahun Ini",
@@ -353,13 +353,13 @@
         "allYears": "Semua Tahun",
         "allDepartments": "Semua Jabatan",
         "allClassifications": "Semua Klasifikasi",
-        "showingDocs": "Menunjukkan {{filtered}} daripada {{total}} dokumen arkib",
+        "showingDocs": "Paparan {{filtered}} daripada {{total}} Arkib Dokumen",
         "grid": "Grid",
         "list": "Senarai",
         "sender": "Pengirim",
         "archivedDate": "Tarikh Diarkibkan",
-        "emptyTitle": "Tiada dokumen arkib ditemui",
-        "emptyDesc": "Cuba laraskan kriteria carian atau penapis anda",
+        "emptyTitle": "Dokumen Tidak Ditemui.",
+        "emptyDesc": "Cuba sekali lagi dengan kriteria carian atau penapis tepat",
         "columns": {
             "reference": "Rujukan",
             "title": "Tajuk",
@@ -372,9 +372,9 @@
     },
     "userManagement": {
         "title": "Pengurusan Pengguna",
-        "description": "Urus pengguna, peranan, dan keizinan",
+        "description": "Urus Pengguna, Peranan dan Keizinan",
         "addUser": "Tambah Pengguna Baharu",
-        "editUser": "Edit Pengguna",
+        "editUser": "Sunting Pengguna",
         "totalUsers": "Jumlah Pengguna",
         "activeUsers": "Pengguna Aktif",
         "inactiveUsers": "Pengguna Tidak Aktif",
@@ -387,14 +387,14 @@
         "allDepartments": "Semua Jabatan",
         "status": "Status",
         "allStatus": "Semua Status",
-        "showingUsers": "Menunjukkan {{filtered}} daripada {{total}} pengguna",
+        "showingUsers": "Paparan {{filtered}} daripada {{total}} pengguna",
         "id": "ID",
         "deleteConfirm": "Adakah anda pasti mahu memadam {{name}}?",
         "deleteSuccess": "Pengguna \"{{name}}\" berjaya dipadam!",
         "addSuccess": "Pengguna \"{{name}}\" berjaya ditambah!",
         "updateSuccess": "Pengguna \"{{name}}\" berjaya dikemas kini!",
         "fullName": "Nama Penuh",
-        "fullNamePlaceholder": "Masukkan nama penuh",
+        "fullNamePlaceholder": "Isikan Nama Penuh",
         "emailLabel": "Alamat E-mel",
         "roles": {
             "admin": "Pentadbir",
@@ -412,14 +412,14 @@
         }
     },
     "reports": {
-        "title": "Laporan & Analitik",
-        "description": "Jana laporan dan lihat analitik",
+        "title": "Laporan & Analisis",
+        "description": "Jana Laporan dan Analisis",
         "exportPdf": "Eksport PDF",
         "exportExcel": "Eksport Excel",
         "totalDocuments": "Jumlah Dokumen",
         "completed": "Selesai",
         "pending": "Tertunda",
-        "inProgress": "Sedang Diproses",
+        "inProgress": "Dalam Proses",
         "configuration": {
             "title": "Konfigurasi Laporan",
             "reportType": "Jenis Laporan",
@@ -431,27 +431,27 @@
             "title": "Templat Laporan Tersedia",
             "overview": {
                 "name": "Laporan Ringkasan Dokumen",
-                "desc": "Ringkasan menyeluruh semua aktiviti dokumen"
+                "desc": "Ringkasan Menyeluruh Semua Aktiviti Dokumen"
             },
             "performance": {
                 "name": "Analitik Prestasi",
-                "desc": "Masa pemprosesan dan metrik kecekapan"
+                "desc": "Masa Pemprosesan dan Metrik Kecekapan"
             },
             "department": {
                 "name": "Analisis Jabatan",
-                "desc": "Pengagihan dokumen mengikut jabatan"
+                "desc": "Pengagihan Dokumen Mengikut Jabatan"
             },
             "sla": {
                 "name": "Laporan Pematuhan SLA",
-                "desc": "Penjejakan pematuhan perjanjian tahap perkhidmatan"
+                "desc": "Penilaian Pematuhan SLA"
             },
             "user": {
                 "name": "Laporan Aktiviti Pengguna",
-                "desc": "Statistik penglibatan dan aktiviti pengguna"
+                "desc": "Statistik Penglibatan dan Aktiviti Pengguna"
             },
             "classification": {
                 "name": "Laporan Klasifikasi",
-                "desc": "Pecahan klasifikasi keselamatan dokumen"
+                "desc": "Pecahan Klasifikasi Keselamatan Dokumen"
             }
         },
         "ranges": {
@@ -472,7 +472,7 @@
         },
         "distribution": {
             "title": "Pengagihan Jabatan",
-            "docs": "dokumen"
+            "docs": "Dokumen"
         },
         "alerts": {
             "generating": "Menjana {{report}} untuk {{range}}...",
@@ -481,9 +481,9 @@
     },
     "settings": {
         "title": "Tetapan",
-        "description": "Konfigurasi tetapan sistem dan keutamaan",
+        "description": "Konfigurasi Tetapan Sistem dan Keutamaan",
         "saveChanges": "Simpan Perubahan",
-        "savedSuccess": "Tetapan berjaya disimpan!",
+        "savedSuccess": "Tetapan Berjaya Disimpan!",
         "tabs": {
             "general": "Umum",
             "security": "Keselamatan",
@@ -494,7 +494,7 @@
         "general": {
             "title": "Tetapan Umum",
             "orgName": "Nama Organisasi",
-            "orgNamePlaceholder": "Masukkan nama organisasi",
+            "orgNamePlaceholder": "Masukkan Nama Organisasi",
             "orgNameHelper": "Nama ini akan muncul dalam laporan dan dokumen",
             "timezone": "Zon Waktu",
             "language": "Bahasa",
@@ -503,16 +503,16 @@
         "security": {
             "title": "Tetapan Keselamatan",
             "sessionTimeout": "Tamat Masa Sesi",
-            "sessionTimeoutHelper": "Log keluar pengguna secara automatik selepas tempoh tidak aktif",
+            "sessionTimeoutHelper": "Log Keluar Pengguna Secara Automatik Selepas Tempoh Tidak Aktif",
             "passwordExpiry": "Tamat Tempoh Kata Laluan",
-            "passwordExpiryHelper": "Wajibkan pengguna menukar kata laluan secara berkala",
+            "passwordExpiryHelper": "Wajibkan Pengguna Menukar Kata Laluan Secara Berkala",
             "twoFactor": {
                 "title": "Pengesahan Dua Faktor",
-                "desc": "Wajibkan pengesahan tambahan untuk log masuk"
+                "desc": "Wajibkan Pengesahan Tambahan untuk Log Masuk"
             },
             "recommendation": {
                 "title": "Cadangan Keselamatan",
-                "desc": "Kami mengesyorkan mengaktifkan pengesahan dua faktor dan menetapkan tamat tempoh kata laluan kepada 90 hari atau kurang untuk keselamatan yang dipertingkatkan."
+                "desc": "Kami mengesyorkan mengaktifkan pengesahan dua faktor dan menetapkan tamat tempoh kata laluan untuk setiap 90 hari demi keselamatan."
             },
             "options": {
                 "minutes_15": "15 minit",
@@ -522,7 +522,7 @@
                 "days_30": "30 hari",
                 "days_60": "60 hari",
                 "days_90": "90 hari",
-                "never": "Tidak Pernah"
+                "never": "Jangan"
             }
         },
         "notifications": {
@@ -533,11 +533,11 @@
             },
             "alerts": {
                 "title": "Amaran Dokumen",
-                "desc": "Dapatkan pemberitahuan mengenai perubahan status dokumen"
+                "desc": "Dapatkan Pemberitahuan Mengenai Perubahan Status Dokumen"
             },
             "updates": {
                 "title": "Kemas Kini Sistem",
-                "desc": "Terima pemberitahuan mengenai penyelenggaraan sistem"
+                "desc": "Terima Pemberitahuan Mengenai Penyelenggaraan Sistem"
             }
         },
         "appearance": {
@@ -545,15 +545,15 @@
             "theme": "Tema",
             "light": {
                 "title": "Mod Cerah",
-                "desc": "Antara muka yang bersih dan terang"
+                "desc": "Tema Bersih dan Terang"
             },
             "dark": {
                 "title": "Mod Gelap",
-                "desc": "Mudah pada mata"
+                "desc": "Selesa Untuk Mata"
             },
             "compact": {
                 "title": "Mod Padat",
-                "desc": "Kurangkan jarak untuk paparan maklumat yang lebih padat"
+                "desc": "Pengurangan Jarak untuk Paparan Maklumat yang Lebih Padat"
             }
         },
         "system": {
@@ -563,16 +563,16 @@
             "connected": "Disambungkan",
             "lastBackup": "Sandaran Terakhir",
             "storage": "Simpanan Digunakan",
-            "diagnostics": "Jalankan Diagnostik Sistem"
+            "diagnostics": "Mulakan Diagnostik Sistem"
         }
     },
     "calendar": {
         "title": "Kalendar & Peringatan",
-        "description": "Urus tarikh akhir dokumen dan pemberitahuan automatik",
+        "description": "Urus Tarikh Akhir Dokumen dan Pemberitahuan Automatik",
         "today": "Hari Ini",
         "settings": "Tetapan",
         "tasksFor": "Tugasan untuk {{date}}",
-        "documentsCount": "{{count}} dokumen tamat tempoh hari ini",
+        "documentsCount": "{{count}} Dokumen Tamat Tempoh Hari Ini",
         "openCalendar": "Buka Kalendar",
         "months": [
             "Januari",
@@ -598,18 +598,18 @@
             "Sabtu"
         ],
         "due": "Tamat Tempoh",
-        "more": "lagi",
+        "more": "Lagi",
         "documentsDueOn": "Dokumen Tamat Tempoh pada {{date}}",
-        "assignedTo": "Ditugaskan kepada",
+        "assignedTo": "Ditugaskan Kepada",
         "details": "Perincian",
         "upcomingReminders": {
             "title": "Peringatan Akan Datang",
-            "description": "Peringatan automatik untuk dokumen yang perlu disiapkan dalam masa 7 hari.",
-            "noReminders": "Tiada peringatan akan datang",
+            "description": "Peringatan Automatik Untuk Dokumen Yang Perlu Disiapkan Dalam Masa 7 Hari.",
+            "noReminders": "Tiada Peringatan Akan Datang",
             "sendNow": "Hantar Sekarang",
             "scheduled": "Dijadualkan",
             "sent": "Dihantar",
-            "alertSuccess": "Peringatan dihantar untuk dokumen! Pemberitahuan dihantar kepada penerima tugas."
+            "alertSuccess": "Peringatan Dihantar Untuk Dokumen! Pemberitahuan Dihantar Kepada Penerima Tugas."
         },
         "automationRules": {
             "title": "Peraturan Automasi",
@@ -630,50 +630,50 @@
     },
     "chat": {
         "title": "Pembantu AI",
-        "description": "Dapatkan pandangan pintar dan jana dokumen menggunakan AI",
-        "welcomeMessage": "Hai! Saya pembantu AI anda. Saya boleh membantu anda menganalisis dokumen, menjana laporan, mencipta pembentangan, dan memberikan pandangan tentang data sistem anda. Bagaimana saya boleh membantu anda hari ini?",
-        "sampleResponse": "Saya berbesar hati untuk membantu anda dengan itu! Berdasarkan data sistem anda, saya boleh menjana dokumen berikut untuk anda:",
+        "description": "Dapatkan Pandangan dan Maklumbalas Dengan Menggunakan AI",
+        "welcomeMessage": "Hai! Saya Pembantu AI anda. Saya boleh membantu anda menganalisis dokumen, menjana laporan, menghasilkan kertas pembentangan, dan memberikan pandangan tentang data sistem anda. Bagaimana saya boleh membantu anda hari ini?",
+        "sampleResponse": "Saya sedia membantu anda dengan itu! Berdasarkan data sistem anda, saya boleh menjana penemuan saya berikut untuk anda:",
         "you": "Anda",
         "assistant": "Pembantu AI",
         "send": "Hantar",
         "generate": "Jana",
-        "inputPlaceholder": "Tanya saya apa-apa tentang dokumen anda atau minta analitik...",
-        "inputHint": "Tekan Enter untuk hantar, Shift+Enter untuk baris baharu",
-        "suggestedDocuments": "Dokumen Dicadangkan",
+        "inputPlaceholder": "Sila nyatakan keperluan anda mengenai dokumen anda termasuk analisis jika diperlukan...",
+        "inputHint": "Tekan kekunci Enter untuk hantar. Tekan kekunci Shift+Enter untuk baris baharu",
+        "suggestedDocuments": "Cadangan Dokumen",
         "quickActions": {
             "title": "Tindakan Pantas",
-            "summarize": "Ringkaskan dokumen terkini",
-            "generateReport": "Jana laporan bulanan",
-            "analyzeData": "Analisis trend dokumen",
-            "createPresentation": "Cipta pembentangan eksekutif"
+            "summarize": "Ringkaskan Dokumen Terkini",
+            "generateReport": "Jana Laporan Bulanan",
+            "analyzeData": "Analisis Trend Dokumen",
+            "createPresentation": "Hasilkan Kertas Pembentangan Eksekutif"
         },
         "capabilities": {
-            "title": "Apa Yang Saya Boleh Lakukan",
-            "analyze": "Menganalisis corak dan trend dokumen",
-            "generate": "Menjana laporan, pembentangan, dan hamparan",
+            "title": "Apa Yang Saya Boleh Lakukan?",
+            "analyze": "Menganalisa dokumen berkaitan",
+            "generate": "Menjana laporan, pembentangan, dan spreadsheet",
             "insights": "Memberikan pandangan berdasarkan data",
             "automate": "Mengautomasikan aliran kerja dokumen"
         },
         "actions": {
             "monthlyReport": "Laporan Dokumen Bulanan",
-            "monthlyReportDesc": "Ringkasan menyeluruh semua aktiviti dokumen bulan ini",
-            "dataAnalysis": "Hamparan Analitik Dokumen",
-            "dataAnalysisDesc": "Pecahan terperinci masa pemprosesan dan metrik kecekapan",
+            "monthlyReportDesc": "Ringkasan Menyeluruh Semua Aktiviti Dokumen Bulan Ini",
+            "dataAnalysis": "Hamparan Analisis Dokumen",
+            "dataAnalysisDesc": "Pecahan Terperinci Masa Pemprosesan dan Metrik Kecekapan",
             "executiveSummary": "Pembentangan Ringkasan Eksekutif",
-            "executiveSummaryDesc": "Gambaran peringkat tinggi untuk pembentangan pihak berkepentingan"
+            "executiveSummaryDesc": "Gambaran Menyeluruh untuk Pembentangan Kepada Pihak Penting"
         }
     },
     "chatWidget": {
         "title": "Pembantu AI",
         "subtitle": "Dalam Talian",
         "welcomeMessage": "Hai! Bagaimana saya boleh membantu anda hari ini?",
-        "sampleResponse": "Saya boleh membantu anda dengan itu! Adakah anda mahu saya memberikan butiran lanjut atau menjana dokumen?",
-        "inputPlaceholder": "Taip mesej anda...",
+        "sampleResponse": "Baik, saya boleh membantu anda dengan itu! Adakah anda mahu saya memberikan butiran lanjut atau menjana dokumen?",
+        "inputPlaceholder": "Taip Mesej Anda...",
         "send": "Hantar",
         "openChat": "Buka Pembantu AI",
         "close": "Tutup",
         "minimize": "Minimumkan",
         "maximize": "Maksimumkan",
-        "openFullChat": "Buka sembang penuh →"
+        "openFullChat": "Buka Perbualan Penuh →"
     }
 }
